@@ -4,15 +4,17 @@ require_once 'ts_core.php';
 
 session_start();
 
-function getGetInt($id, $default) {
-  $i = $default;
-  if (isset($_GET[$id])) { $i = intval($_GET[$id]); }
-  return $i;
+function getGetInt( $id, $default ) {
+    $i = $default;
+    if ( isset( $_GET[ $id ] ) ) {
+        $i = intval( $_GET[ $id ] );
+    }
+    return $i;
 }
 
-$ref_id = getGetInt('ref', 0);
-if ($ref_id > 0) {
-  $_SESSION['ref_id'] = $ref_id;
+$ref_id = getGetInt( 'ref', 0 );
+if ( $ref_id > 0 ) {
+    $_SESSION[ 'ref_id' ] = $ref_id;
 }
 
 ?>
@@ -31,12 +33,12 @@ if ($ref_id > 0) {
 <script type="text/javascript">
 
 function loginSubmit() {
-  var login_form = document.getElementById('login_form');
-  var pass = hex_md5(hex_md5(login_form.a.value) + login_form.h.value);
-  login_form.p.value = pass;
-  login_form.a.value = '';
+    var login_form = document.getElementById( 'login_form' );
+    var pass = hex_md5( hex_md5( login_form.a.value ) + login_form.h.value );
+    login_form.p.value = pass;
+    login_form.a.value = '';
 
-  return true;
+    return true;
 }
 
 </script>
@@ -47,42 +49,42 @@ function loginSubmit() {
 
 <?
 
-$error_id = getGetInt('i', 0);
+$error_id = getGetInt( 'i', 0 );
 
-if ($error_id > 0) {
-  echo '<p class="tip">';
+if ( $error_id > 0 ) {
+    echo '<p class="tip">';
 
-  switch ($error_id) {
-  case 1:
-    echo 'Sorry, that username and password don\'t match.';
-    break;
-  case 2:
-    echo 'You need to verify your account before you can log in!';
-    break;
-  case 3:
-    echo 'Sorry, you\'re going to have to wait for a while ' .
-         'before you can log in again.';
-    break;
-  case 4:
-    echo 'The game is under maintenance - please try again in ten minutes!';
-    break;
-  case 5:
-    echo 'Sorry, you need to wait a little bit between login attempts.<br>' .
-         'Please try again in one minute!';
-    break;
-  case 6:
-    echo 'Twelve Sands is down for a few minutes for maintenance.<br>Please ' .
-         'try again in a minute or so!';
-    break;
-  default:
-    echo 'Invalid error code detected.  Hacker alert!<br>Formatting hard ' .
-         'drive and wiping database tables as a precaution.<br>How you ' .
-         'like them apples, hacker?<br>HACKER!!</p>';
-    echo '<p class="tip">ATH0</p><p class="tip">NO CARRIER';
-    break;
-  }
+    switch ( $error_id ) {
+    case 1:
+        echo 'Sorry, that username and password don\'t match.';
+        break;
+    case 2:
+        echo 'You need to verify your account before you can log in!';
+        break;
+    case 3:
+        echo 'Sorry, you\'re going to have to wait for a while ' .
+             'before you can log in again.';
+        break;
+    case 4:
+        echo 'The game is under maintenance - please try again in ten minutes!';
+        break;
+    case 5:
+        echo 'Sorry, you need to wait a little bit between login attempts.<br>' .
+             'Please try again in one minute!';
+        break;
+    case 6:
+        echo 'Twelve Sands is down for a few minutes for maintenance.<br>Please ' .
+             'try again in a minute or so!';
+        break;
+    default:
+        echo 'Invalid error code detected.  Hacker alert!<br>Formatting hard ' .
+             'drive and wiping database tables as a precaution.<br>How you ' .
+             'like them apples, hacker?<br>HACKER!!</p>';
+        echo '<p class="tip">ATH0</p><p class="tip">NO CARRIER';
+        break;
+    }
 
-  echo '</p>';
+    echo '</p>';
 }
 
 ?>
