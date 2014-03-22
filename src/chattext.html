@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>Chat Text</title>
+<script language="javascript" type="text/javascript">
+function getFocus() {
+    document.chatform.m.focus();
+}
+
+var send_http_request = false;
+
+function getRequest() {
+    if ( send_http_request ) { return; }
+
+    try {
+        // Firefox, Opera 8.0+, Safari
+        send_http_request = new XMLHttpRequest();
+    } catch ( e ) {
+        // Internet Explorer
+        try {
+            send_http_request = ActiveXObject( "Msxml2.XMLHTTP" );
+        } catch ( e ) {
+            send_http_request = new ActiveXObject( "Microsoft.XMLHTTP" );
+        }
+    }
+}
+
+function sendChat() {
+    getRequest();
+    if ( ! send_http_request ) { return; }
+
+    if ( document.getElementById( 'chatform_m' ).value.length > 0 ) {
+        send_http_request.open( 'POST', 'chatasync.php' );
+        send_http_request.onreadystatechange = refreshChat;
+        var m_param = 'm=' + escape( document.getElementById( 'chatform_m' ).value );
+        var m_param = m_param + '&c=0';
+
+        send_http_request.setRequestHeader( "Content-type",
+                                      "application/x-www-form-urlencoded" );
+        send_http_request.setRequestHeader( "Content-length", m_param.length );
+        send_http_request.setRequestHeader( "Connection", "close" );
+        send_http_request.send( m_param );
+
+        document.getElementById( 'chatform_m' ).value = '';
+        top.chat_frame.chat_lines.receiveChat();
+    }
+
+    return true;
+}
+
+function refreshChat( http_request ) {
+    if ( http_request ) {
+        if ( http_request.readyState == 4 ) {
+            if ( http_request.status == 200 ) {
+
+            } else {
+              //alert( 'There was a problem with the request.' );
+            }
+        }
+    }
+}
+
+function handleKeystroke( e )
+{
+    var keyPressed;
+
+    if ( document.all ) {
+        //Browser used: Internet Explorer 6
+        keyPressed = e.keyCode;
+    } else {
+        //Browser used: Firefox
+        keyPressed = e.which;
+    }
+
+    if ( keyPressed == 13 ) {
+        sendChat();
+    }
+
+    return true;
+}
+
+</script>
+</head>
+<body onload="getFocus();">
+<p><form name="chatform" id="chatform" method="get"
+    onsubmit="return false;">
+<input type="text" id="chatform_m" name="m" style="width: 220px;"
+    onkeypress="return handleKeystroke( event )"></form></p>
+</body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>Twelve Sands Chat</title>
+<link rel="stylesheet" type="text/css" href="css/site.css" />
+<script language="javascript" type="text/javascript">
+var recv_http_request = false;
+var last_id = 0;
+var refresh_timer;
+
+function getRequest() {
+    if ( ! recv_http_request ) {
+        try {
+            // Firefox, Opera 8.0+, Safari
+            recv_http_request = new XMLHttpRequest();
+        } catch ( e ) {
+            // Internet Explorer
+            try {
+                recv_http_request = ActiveXObject( "Msxml2.XMLHTTP" );
+            } catch ( e ) {
+                recv_http_request = new ActiveXObject( "Microsoft.XMLHTTP" );
+            }
+        }
+    }
+
+    return recv_http_request;
+}
+
+function receiveChat() {
+    getRequest();
+
+    if ( recv_http_request ) {
+        if ( ( recv_http_request.readyState == 4 ) ||
+             ( recv_http_request.readyState == 0 ) ) {
+            var req_time = new Date();
+            var URL = 'chatasync.php?t=' + last_id + '&d=' + req_time.getTime();
+
+            recv_http_request.open( "GET", URL, true );
+            recv_http_request.onreadystatechange = refreshChat; 
+            recv_http_request.send( null );
+        }
+    }
+}
+
+function refreshChat( http_request ) {
+    if ( ( recv_http_request ) && ( recv_http_request.readyState == 4 ) ) {
+        var chat_div = document.getElementById( 'chat_div' );
+        var xml = recv_http_request.responseXML;
+
+        var c_type = recv_http_request.getResponseHeader( "Content-Type" );
+        if ( c_type.indexOf( 'text/xml' ) < 0 ) {
+            top.location = '/';
+        }
+
+        if ( xml ) {
+            var msg_elements = xml.getElementsByTagName( "msg" );
+            var msg_n = msg_elements.length;
+
+            for ( i = msg_n - 1; i >= 0; i-- ) {
+                var m = msg_elements[ i ].getElementsByTagName( "message" );
+                chat_div.innerHTML = chat_div.innerHTML + '<br>' +
+                    m[ 0 ].firstChild.nodeValue;
+
+                if ( parseInt( msg_elements[ i ].getAttribute( 'id' ) ) > last_id ) {
+                    last_id = parseInt( msg_elements[ i ].getAttribute( 'id' ) );
+                }
+            }
+        }
+
+        clearTimeout( refresh_timer );
+        refresh_timer = setTimeout( 'receiveChat();', 5000 );
+
+        window.scrollBy( 0, 1000 );
+    }
+}
+</script>
+</head>
+<body onload="receiveChat();">
+<div class="container_chat">
+<div id="chat_div" class="chat_div"></div>
+</div>
+</body></html>
