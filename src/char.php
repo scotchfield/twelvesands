@@ -59,9 +59,9 @@ if ( array_key_exists( 'char_obj', $char_state_obj ) ) {
 
 <?
 
-  forceCombatCheck( $char_obj );
+forceCombatCheck( $char_obj );
 
-  require '_header.php';
+require '_header.php';
 
 if ( '0' == $a ) {
 
@@ -170,7 +170,7 @@ if ( '0' == $a ) {
       <?= $char[ 'str' ] + $char[ 'str_bonus' ]
       ?></span> (<?= $char[ 'str' ] ?> + <?= $char[ 'str_bonus' ] ?>)</li>
 <?      } else { ?>
-  <li><b>Strength</b>: <?= $char['str'] ?></li>
+  <li><b>Strength</b>: <?= $char[ 'str' ] ?></li>
 <?      } ?>
 <?      if ( $char[ 'dex_bonus' ] != 0 ) { ?>
   <li><b>Dexterity</b>: <span class="mod_highlight">
@@ -201,7 +201,7 @@ if ( '0' == $a ) {
   <li><b>Constitution</b>: <?= $char[ 'con' ] ?></li>
 <?      } ?>
   <li><b>Health</b>: <?= $char[ 'current_hp' ] ?> / <?= $char[ 'base_hp' ] ?></li>
-  <li><b>Mana Points</b>: <?= $char['mana'] ?></li>
+  <li><b>Mana Points</b>: <?= $char[ 'mana' ] ?></li>
   <li><b onmouseover="popup('<b>Fatigue</b> is accumulated by engaging in combats, fishing or mining, and cooking or crafting.  Once you reach one hundred percent, you\'ll need to either eat some food, or wait until the next day.')" onmouseout="popout()">Fatigue</b>: <? renderFatigue( $char[ 'fatigue' ] ); ?> <?
         if ( $char[ 'fatigue_rested' ] > 0 ) {
             echo ' <font color="#ADD8E6">(rested)</font>';
@@ -427,7 +427,7 @@ if ( '0' == $a ) {
         if ( FALSE == $i ) { ?><br>
   <font size="-2">(<a href="inventory.php">equip something else</a>)</font><?
         } ?></p>
-  <p><? renderArtifact($char['mount']); ?>
+  <p><? renderArtifact( $char[ 'mount' ] ); ?>
   <?    if ( $char[ 'mount' ][ 'id' ] != 0 ) {
             if ( $i == FALSE ) {
                 echo '<font size="-2">(<a href="char.php?a=am&i=0">x</a>)</font>';
@@ -675,422 +675,414 @@ if ( '0' == $a ) {
                 continue;
             }
 
-        echo '<p><b>' . $q[ 'name' ] . '</b> ';
-        if ( ( ( $s != 0 ) && ( $q[ 'hidden' ] == 0 ) ) || ( $s == 0 ) ) {
-            echo '(<a href="action.php?a=qh&i=' . $q[ 'id' ] . '">hide quest</a>) ';
-        } else {
-            echo '(<a href="action.php?a=qh&i=' . $q[ 'id' ] . '">show quest</a>) ';
+            echo '<p><b>' . $q[ 'name' ] . '</b> ';
+            if ( ( ( $s != 0 ) && ( $q[ 'hidden' ] == 0 ) ) || ( $s == 0 ) ) {
+                echo '(<a href="action.php?a=qh&i=' . $q[ 'id' ] . '">hide quest</a>) ';
+            } else {
+                echo '(<a href="action.php?a=qh&i=' . $q[ 'id' ] . '">show quest</a>) ';
+            }
+            echo '(<i>Level ' . $q[ 'min_level' ] .
+                 '</i>, <a href="talk.php?t=' .
+                 $q[ 'npc_id' ] . '&q=' . $q[ 'id' ] . '">quest giver</a>): ' .
+                 $q[ 'text' ];
+            if ( $q[ 'quest_artifact1' ] > 0 ) {
+                echo '<br><u>Artifacts to retrieve:</u>';
+                $artifact = $artifact_obj[ $q[ 'quest_artifact1' ] ];
+                $c_count = min( getArtifactQuantity( $char_obj, $q[ 'quest_artifact1' ] ),
+                                $q[ 'quest_quantity1' ] );
+                echo '<br>' . $c_count . ' / ' . $q[ 'quest_quantity1' ] . ': ';
+                echo renderArtifactStr( $artifact, $q[ 'quest_quantity1' ] );
+
+                if ( $q[ 'quest_artifact2' ] > 0 ) {
+                    $artifact = $artifact_obj[ $q[ 'quest_artifact2' ] ];
+                    $c_count = min( getArtifactQuantity( $char_obj, $q[ 'quest_artifact2' ] ),
+                                    $q[ 'quest_quantity2' ] );
+                    echo '<br>' . $c_count . ' / ' . $q[ 'quest_quantity2' ] . ': ';
+                    echo renderArtifactStr( $artifact, $q[ 'quest_quantity2' ] );
+                }
+
+                if ( $q[ 'quest_artifact3' ] > 0 ) {
+                    $artifact = $artifact_obj[ $q[ 'quest_artifact3' ] ];
+                    $c_count = min( getArtifactQuantity( $char_obj, $q[ 'quest_artifact3' ] ),
+                                   $q[ 'quest_quantity3' ] );
+                    echo '<br>' . $c_count . ' / ' . $q[ 'quest_quantity3' ] . ': ';
+                    echo renderArtifactStr( $artifact, $q[ 'quest_quantity3' ] );
+                }
+            }
+            if ( $q[ 'quest_foe1' ] > 0 ) {
+                echo '<br><u>Foes slain:</u>';
+                $f = getFoe( $char_obj, $q[ 'quest_foe1' ] );
+                echo '<br>' . $q[ 'foe_count_1' ] . ' / ' .
+                     $q[ 'quest_foe_quantity1' ] . ': ' . $f[ 'name' ];
+
+                if ( $q[ 'quest_foe2' ] > 0 ) {
+                    $f = getFoe( $char_obj, $q[ 'quest_foe2' ] );
+                    echo '<br>' . $q[ 'foe_count_2' ] . ' / ' .
+                         $q[ 'quest_foe_quantity2' ] . ': ' . $f[ 'name' ];
+                }
+
+                if ( $q[ 'quest_foe3' ] > 0 ) {
+                    $f = getFoe( $char_obj, $q[ 'quest_foe3' ] );
+                    echo '<br>' . $q[ 'foe_count_3' ] . ' / ' .
+                         $q[ 'quest_foe_quantity3' ] . ': ' . $f[ 'name' ];
+                }
+            }
+            if ( $q[ 'reward_quantity' ] > 0 ) {
+                echo '<br><u>Rewards:</u>';
+                if ( $q[ 'reward_artifact' ] == 0 ) {
+                    echo '<br>' . $q[ 'reward_quantity' ] . ' gold';
+                } elseif ( $q[ 'reward_artifact' ] > 0 ) {
+                    $a = $artifact_obj[ $q[ 'reward_artifact' ] ];
+                    echo '<br>' . $q[ 'reward_quantity' ] . 'x ' .
+                         renderArtifactStr( $a, $q[ 'reward_quantity' ] );
+                }
+            }
+            if ( $q[ 'reward_xp' ] > 0 ) {
+                echo '<br>' . $q[ 'reward_xp' ] . ' XP';
+            }
+            if ( $q[ 'reward_rep_amount' ] > 0 ) {
+                echo '<br>' . floor( $q[ 'reward_rep_amount' ] / 1000 ) .
+                    ' reputation with ' . getReputationName( $q[ 'reward_rep_id' ] );
+                if ( $q[ 'reward_rep_max' ] > 0 ) {
+                    $score_obj = getReputationScore( $q[ 'reward_rep_max' ] );
+                    echo '<br><font size="-2">maximum: ' .
+                         $score_obj[ 'n' ] . '</font>';
+                }
+            }
+            echo '</p>' . "\n";
         }
-        echo '(<i>Level ' . $q[ 'min_level' ] .
-             '</i>, <a href="talk.php?t=' .
-             $q[ 'npc_id' ] . '&q=' . $q[ 'id' ] . '">quest giver</a>): ' .
-             $q[ 'text' ];
-        if ( $q[ 'quest_artifact1' ] > 0 ) {
-            echo '<br><u>Artifacts to retrieve:</u>';
-            $artifact = $artifact_obj[ $q[ 'quest_artifact1' ] ];
-            $c_count = min( getArtifactQuantity( $char_obj, $q[ 'quest_artifact1' ] ),
-                            $q[ 'quest_quantity1' ] );
-            echo '<br>' . $c_count . ' / ' . $q[ 'quest_quantity1' ] . ': ';
-            echo renderArtifactStr( $artifact, $q[ 'quest_quantity1' ] );
-
-        if ( $q[ 'quest_artifact2' ] > 0 ) {
-            $artifact = $artifact_obj[ $q[ 'quest_artifact2' ] ];
-            $c_count = min( getArtifactQuantity( $char_obj, $q[ 'quest_artifact2' ] ),
-                            $q[ 'quest_quantity2' ] );
-            echo '<br>' . $c_count . ' / ' . $q[ 'quest_quantity2' ] . ': ';
-            echo renderArtifactStr( $artifact, $q[ 'quest_quantity2' ] );
-        }
-
-        if ( $q[ 'quest_artifact3' ] > 0 ) {
-            $artifact = $artifact_obj[ $q[ 'quest_artifact3' ] ];
-            $c_count = min( getArtifactQuantity( $char_obj, $q[ 'quest_artifact3' ] ),
-                           $q[ 'quest_quantity3' ] );
-            echo '<br>' . $c_count . ' / ' . $q[ 'quest_quantity3' ] . ': ';
-            echo renderArtifactStr( $artifact, $q[ 'quest_quantity3' ] );
-        }
-
     }
-    if ( $q[ 'quest_foe1' ] > 0 ) {
-        echo '<br><u>Foes slain:</u>';
-        $f = getFoe( $char_obj, $q[ 'quest_foe1' ] );
-        echo '<br>' . $q[ 'foe_count_1' ] . ' / ' .
-             $q[ 'quest_foe_quantity1' ] . ': ' . $f[ 'name' ];
 
-        if ( $q[ 'quest_foe2' ] > 0 ) {
-          $f = getFoe( $char_obj, $q[ 'quest_foe2' ] );
-          echo '<br>' . $q[ 'foe_count_2' ] . ' / ' .
-               $q[ 'quest_foe_quantity2' ] . ': ' . $f[ 'name' ];
-        }
-
-        if ( $q[ 'quest_foe3' ] > 0 ) {
-          $f = getFoe( $char_obj, $q[ 'quest_foe3' ] );
-          echo '<br>' . $q[ 'foe_count_3' ] . ' / ' .
-               $q[ 'quest_foe_quantity3' ] . ': ' . $f[ 'name' ];
+    echo '<p><span class="section_header">Quests available:</span>';
+    $quest_todo = getAvailableQuests( $char_obj );
+    if ( count( $quest_todo ) > 0 ) {
+        echo '<br><font size="-2">(<a href="action.php?a=aaq">accept all ' .
+             'available quests</a>)</font>';
+    }
+    echo '</p><p><ul class="char_list">';
+    foreach ( $quest_todo as $q ) {
+        if ( ( $q[ 'repeatable' ] == 0 ) ||
+           ( ( $q[ 'repeatable' ] == 1 ) &&
+           ( ! isset( $char_obj->c[ 'quests' ][ $q[ 'id' ] ] ) ) ) ) {
+            echo '<li><a href="talk.php?t=' . $q[ 'npc_id' ] . '&q=' . $q[ 'id' ] .
+                 '">' . $q[ 'name' ] . '</a></b> (<i>Level ' . $q[ 'min_level' ] .
+                 '</i>)</li>' . "\n";
         }
     }
-    if ($q['reward_quantity'] > 0) {
-        echo '<br><u>Rewards:</u>';
-        if ($q['reward_artifact'] == 0) {
-          echo '<br>' . $q['reward_quantity'] . ' gold';
-        } elseif ($q['reward_artifact'] > 0) {
-          $a = $artifact_obj[$q['reward_artifact']];
-          echo '<br>' . $q['reward_quantity'] . 'x ' .
-               renderArtifactStr($a, $q['reward_quantity']);
-        }
-    }
-    if ($q['reward_xp'] > 0) {
-        echo '<br>' . $q['reward_xp'] . ' XP';
-    }
-    if ($q['reward_rep_amount'] > 0) {
-        echo '<br>' . floor($q['reward_rep_amount'] / 1000) .
-            ' reputation with ' . getReputationName($q['reward_rep_id']);
-        if ($q['reward_rep_max'] > 0) {
-          $score_obj = getReputationScore($q['reward_rep_max']);
-          echo '<br><font size="-2">maximum: ' .
-              $score_obj['n'] . '</font>';
-        }
-    }
+    echo '</ul></p>';
 
-      echo '</p>' . "\n";
-    }
-  }
-
-  echo '<p><span class="section_header">Quests available:</span>';
-  $quest_todo = getAvailableQuests($char_obj);
-  if (count($quest_todo) > 0) {
-    echo '<br><font size="-2">(<a href="action.php?a=aaq">accept all ' .
-         'available quests</a>)</font>';
-  }
-  echo '</p><p><ul class="char_list">';
-  foreach ($quest_todo as $q) {
-    if (($q['repeatable'] == 0) ||
-        (($q['repeatable'] == 1) &&
-         (!isset($char_obj->c['quests'][$q['id']])))) {
-      echo '<li><a href="talk.php?t=' . $q['npc_id'] . '&q=' . $q['id'] .
-           '">' . $q['name'] . '</a></b> (<i>Level ' . $q['min_level'] .
-           '</i>)</li>' . "\n";
-    }
-  }
-  echo '</ul></p>';
-
-  echo '<p><span class="section_header">Repeatable quests ' .
-       'available:</span></p>';
-  echo '<p><ul class="char_list">';
-  foreach ($quest_todo as $q) {
-    if (($q['repeatable'] == 1) &&
-        (isset($char_obj->c['quests'][$q['id']]))) {
-      echo '<li><a href="talk.php?t=' . $q['npc_id'] . '&q=' . $q['id'] .
-           '">' . $q['name'] .
-           '</a></b> (<i>Level ' . $q['min_level'] . '</i>)</li>' . "\n";
-    }
-  }
-  echo '</ul></p>';
-
-  if ($s > 0) {
-    echo '<p><span class="section_header">Quests completed:</span></p>';
+    echo '<p><span class="section_header">Repeatable quests ' .
+         'available:</span></p>';
     echo '<p><ul class="char_list">';
-    foreach ($quests as $q) {
-      if (sg_quest_done == $q['status']) {
-        echo '<li><b>' . $q['name'] . "</b></li>\n";
+    foreach ( $quest_todo as $q ) {
+      if ( ( $q[ 'repeatable' ] == 1 ) &&
+          ( isset( $char_obj->c[ 'quests' ][ $q[ 'id' ] ] ) ) ) {
+        echo '<li><a href="talk.php?t=' . $q[ 'npc_id' ] . '&q=' . $q[ 'id' ] .
+             '">' . $q[ 'name' ] .
+             '</a></b> (<i>Level ' . $q[ 'min_level' ] . '</i>)</li>' . "\n";
       }
     }
     echo '</ul></p>';
-  }
 
-  echo '<p><a href="char.php">Go back to your character page</a></p>';
-
-} elseif ('ma' == $a) {
-
-  include '_charmenu.php';
-
-  foreach ($char_state_obj['out'] as $st) {
-    echo $st;
-  }
-
-  echo '<p><a href="char.php">Go back to your character page</a></p>';
-
-} elseif ('p1' == $a) {
-
-  include '_charmenu.php';
-
-  echo '<p><span class="section_header">Sandstorm Wisdom Deck: Cards ' .
-       'Completed</span></p>';
-
-  $cards = getSandstormCompletionArray($char_obj->c);
-
-  echo '<p>';
-  foreach ($cards as $k => $card) {
-    if (FALSE == $card['completed']) {
-      echo '<s>Card ' . $k . '</s><br>';
-    } else {
-      echo 'Card ' . $k . ' complete!<br>';
-    }
-  }
-  echo '</p>';
-
-} elseif ('du' == $a) {
-
-  include '_charmenu.php';
-
-  echo '<h3>Duel Requests:</h3>';
-
-  foreach ($char_obj->c['duel_requests'] as $duel) {
-    if ($duel['status'] == sg_duel_challenge_recv) {
-      echo '<p>Challenge received from <a href="char.php?i=' .
-           $duel['target_id'] . '">' . $duel['titled_name'] . '</a> (Level ' .
-           $duel['level'] . ')</a><br><font size="-2">' .
-           '(<a href="action.php?a=dua&i=' .
-           $duel['id'] . '">Accept the challenge</a>) ' .
-           '(<a href="action.php?a=dur&i=' .
-           $duel['id'] . '">Reject the challenge</a>)</font>' .
-           '</p>';
-    } elseif ($duel['status'] == sg_duel_challenge_sent) {
-      echo '<p>Challenge sent to <a href="char.php?i=' .
-           $duel['target_id'] . '">' . $duel['titled_name'] . '</a> (Level ' .
-           $duel['level'] . ')</a><br><font size="-2">' .
-           '(<a href="action.php?a=dur&i=' .
-           $duel['id'] . '">Abort the challenge</a>)</font>' .
-           '</p>';
-    }
-  }
-
-} elseif ('dr' == $a) {
-
-  include '_charmenu.php';
-
-  echo '<h3>Dungeon Run History:</h3>';
-
-  if (isset($_GET['i'])) {
-    $i = getGetInt('i', 0);
-    $c_obj = new Char($i);
-  } else {
-    $i = FALSE;
-  }
-
-  if (FALSE != $i) {
-
-    $d_obj = getDungeonRunHistory($i);
-
-    if (count($d_obj) == 0) {
-      echo '<p>No dungeon runs completed!</p>';
-    } else {
-      echo '<p>' . count($d_obj) . ' runs completed.</p>';
-      echo '<center><table border="0" width="100%"><tr>' .
-           '<th>Type</th><th>Level</th>' .
-           '<th>XP</th><th>Fatigue</th><th>Combats</th><th>Started</th>' .
-           '<th>Completed</th><th>STR</th><th>DEX</th><th>INT</th>' .
-           '<th>CHA</th><th>CON</th></tr>';
-      foreach ($d_obj as $run) {
-        $d_name = '';
-        switch ($run['d_id']) {
-        case 1: $d_name = '&Aacute;lmok'; break;
+    if ( $s > 0 ) {
+        echo '<p><span class="section_header">Quests completed:</span></p>';
+        echo '<p><ul class="char_list">';
+        foreach ( $quests as $q ) {
+            if ( sg_quest_done == $q[ 'status' ] ) {
+                echo '<li><b>' . $q[ 'name' ] . "</b></li>\n";
+            }
         }
-        echo '<tr align="center"><td>' . $d_name .
-             '</td><td>' . $run['level'] . '</td><td>' .
-             $run['xp'] . '</td><td>' . floor($run['total_fatigue'] / 1000) .
-             '</td><td>' . $run['total_combats'] . '</td><td>' .
-             date('M j y', $run['date_started']) . '</td><td>' .
-             date('M j y', $run['date_completed']) . '</td><td>' .
-             bitCount($run['skills_str']) . '</td><td>' .
-             bitCount($run['skills_dex']) . '</td><td>' .
-             bitCount($run['skills_int']) . '</td><td>' .
-             bitCount($run['skills_cha']) . '</td><td>' .
-             bitCount($run['skills_con']) . '</td></tr>';
-      }
-      echo '</table></center>';
+        echo '</ul></p>';
     }
 
-    if ($c_obj->c['d_id'] > 0) {
-      echo '<h3>Current Dungeon Run Statistics:</h3>';
-      echo '<p><b>Dungeon Run:</b> ';
-      switch ($c_obj->c['d_id']) {
-      case 1: echo '&Aacute;lmok'; break;
-      }
-      echo '<br><b>Total Combats:</b> ' . $c_obj->c['total_combats'] . '<br>';
-      echo '<b>Total Fatigue:</b> ' .
-           floor($c_obj->c['total_fatigue'] / 1000) . '%</p>';
-    }
+    echo '<p><a href="char.php">Go back to your character page</a></p>';
 
-  }
+} elseif ( 'ma' == $a ) {
 
-} elseif ('ac' == $a) {
-
-  $i = getGetInt('i', 0);
-  if ($i > 0) {
-    $titled_name = getTitledNameById($i);
-    $achieve_obj = getAchievements($i);
-    include '_profilemenu.php';
-  } else {
-    $achieve_obj = getAchievements($char_obj->c['id']);
     include '_charmenu.php';
-  }
 
-  echo '<h3>Achievements</h3>';
+    foreach ( $char_state_obj[ 'out' ] as $st ) {
+        echo $st;
+    }
 
-  if (count($achieve_obj) == 0) {
-    echo '<p><b>No achievements have been earned yet!</b></p>';
-  } else {
-    foreach ($achieve_obj as $x) {
-      echo '<center><table class="achievement"><tr><td width="36">' .
-        '<img src="/images/achieve.gif" width="32" height="32"></td>' .
-        '<td width="100%"><b>' . $x['title'] . '</b><br>' .
-        $x['description'] . '<br><i>' .
-        date('F j, Y, g:i a', $x['timestamp']) .
-        '</i></td><td width="36"><img src="/images/achieve.gif" width="32" ' .
-        'height="32"></td></tr></table></center>';
+    echo '<p><a href="char.php">Go back to your character page</a></p>';
+
+} elseif ( 'p1' == $a ) {
+
+    include '_charmenu.php';
+
+    echo '<p><span class="section_header">Sandstorm Wisdom Deck: Cards ' .
+         'Completed</span></p>';
+
+    $cards = getSandstormCompletionArray( $char_obj->c );
+
+    echo '<p>';
+    foreach ( $cards as $k => $card ) {
+        if ( FALSE == $card[ 'completed' ] ) {
+          echo '<s>Card ' . $k . '</s><br>';
+        } else {
+          echo 'Card ' . $k . ' complete!<br>';
+        }
+    }
+    echo '</p>';
+
+} elseif ( 'du' == $a ) {
+
+    include '_charmenu.php';
+
+    echo '<h3>Duel Requests:</h3>';
+
+    foreach ( $char_obj->c[ 'duel_requests' ] as $duel ) {
+        if ( $duel[ 'status' ] == sg_duel_challenge_recv ) {
+            echo '<p>Challenge received from <a href="char.php?i=' .
+                 $duel[ 'target_id' ] . '">' . $duel[ 'titled_name' ] . '</a> (Level ' .
+                 $duel[ 'level' ] . ')</a><br><font size="-2">' .
+                 '(<a href="action.php?a=dua&i=' .
+                 $duel[ 'id' ] . '">Accept the challenge</a>) ' .
+                 '(<a href="action.php?a=dur&i=' .
+                 $duel[ 'id' ] . '">Reject the challenge</a>)</font>' .
+                 '</p>';
+        } elseif ( $duel[ 'status' ] == sg_duel_challenge_sent ) {
+            echo '<p>Challenge sent to <a href="char.php?i=' .
+                 $duel[ 'target_id' ] . '">' . $duel[ 'titled_name' ] . '</a> (Level ' .
+                 $duel[ 'level' ] . ')</a><br><font size="-2">' .
+                 '(<a href="action.php?a=dur&i=' .
+                 $duel[ 'id' ] . '">Abort the challenge</a>)</font>' .
+                 '</p>';
+        }
+    }
+
+} elseif ( 'dr' == $a ) {
+
+    include '_charmenu.php';
+
+    echo '<h3>Dungeon Run History:</h3>';
+
+    if ( isset( $_GET[ 'i' ] ) ) {
+        $i = getGetInt( 'i', 0 );
+        $c_obj = new Char( $i );
+    } else {
+        $i = FALSE;
+    }
+
+    if ( FALSE != $i ) {
+
+        $d_obj = getDungeonRunHistory( $i );
+
+        if ( count( $d_obj ) == 0 ) {
+            echo '<p>No dungeon runs completed!</p>';
+        } else {
+            echo '<p>' . count( $d_obj ) . ' runs completed.</p>';
+            echo '<center><table border="0" width="100%"><tr>' .
+                 '<th>Type</th><th>Level</th>' .
+                 '<th>XP</th><th>Fatigue</th><th>Combats</th><th>Started</th>' .
+                 '<th>Completed</th><th>STR</th><th>DEX</th><th>INT</th>' .
+                 '<th>CHA</th><th>CON</th></tr>';
+            foreach ( $d_obj as $run ) {
+                $d_name = '';
+                switch ( $run[ 'd_id' ] ) {
+                    case 1: $d_name = '&Aacute;lmok'; break;
+                }
+                echo '<tr align="center"><td>' . $d_name .
+                     '</td><td>' . $run[ 'level' ] . '</td><td>' .
+                     $run[ 'xp' ] . '</td><td>' . floor( $run[ 'total_fatigue' ] / 1000 ) .
+                     '</td><td>' . $run[ 'total_combats' ] . '</td><td>' .
+                     date( 'M j y', $run[ 'date_started' ] ) . '</td><td>' .
+                     date( 'M j y', $run[ 'date_completed' ] ) . '</td><td>' .
+                     bitCount( $run[ 'skills_str' ] ) . '</td><td>' .
+                     bitCount( $run[ 'skills_dex' ] ) . '</td><td>' .
+                     bitCount( $run[ 'skills_int' ] ) . '</td><td>' .
+                     bitCount( $run[ 'skills_cha' ] ) . '</td><td>' .
+                     bitCount( $run[ 'skills_con' ] ) . '</td></tr>';
+            }
+            echo '</table></center>';
+        }
+
+        if ( $c_obj->c[ 'd_id' ] > 0 ) {
+          echo '<h3>Current Dungeon Run Statistics:</h3>';
+          echo '<p><b>Dungeon Run:</b> ';
+          switch ( $c_obj->c[ 'd_id' ] ) {
+              case 1: echo '&Aacute;lmok'; break;
+          }
+          echo '<br><b>Total Combats:</b> ' . $c_obj->c[ 'total_combats' ] . '<br>';
+          echo '<b>Total Fatigue:</b> ' .
+               floor( $c_obj->c[ 'total_fatigue' ] / 1000 ) . '%</p>';
+        }
 
     }
-  }
 
-//  if ((sg_debug) || ($i == 0)) {
+} elseif ( 'ac' == $a ) {
+
+    $i = getGetInt( 'i', 0 );
+    if ( $i > 0 ) {
+        $titled_name = getTitledNameById( $i );
+        $achieve_obj = getAchievements( $i );
+        include '_profilemenu.php';
+    } else {
+        $achieve_obj = getAchievements( $char_obj->c[ 'id' ] );
+        include '_charmenu.php';
+    }
+
+    echo '<h3>Achievements</h3>';
+
+    if ( count( $achieve_obj ) == 0 ) {
+        echo '<p><b>No achievements have been earned yet!</b></p>';
+    } else {
+        foreach ( $achieve_obj as $x ) {
+          echo '<center><table class="achievement"><tr><td width="36">' .
+               '<img src="/images/achieve.gif" width="32" height="32"></td>' .
+               '<td width="100%"><b>' . $x[ 'title' ] . '</b><br>' .
+               $x[ 'description' ] . '<br><i>' .
+               date( 'F j, Y, g:i a', $x[ 'timestamp' ] ) .
+               '</i></td><td width="36"><img src="/images/achieve.gif" width="32" ' .
+               'height="32"></td></tr></table></center>';
+
+        }
+    }
+
     echo '<h3><b>Incomplete Achievements:</b></h3><p>';
     $a_obj = getAllAchievements();
-    foreach ($a_obj as $x) {
-      if (!isset($achieve_obj[$x['id']])) {
-        echo '<b>' . $x['title'] . '</b><br><i>' .
-             $x['description'] .'</i><br>';
-      }
+    foreach ( $a_obj as $x ) {
+        if ( ! isset( $achieve_obj[ $x[ 'id' ] ] ) ) {
+            echo '<b>' . $x[ 'title' ] . '</b><br><i>' .
+                 $x[ 'description' ] .'</i><br>';
+        }
     }
-//  }
 
-} elseif ('tf' == $a) {
+} elseif ( 'tf' == $a ) {
 
-  $i = getGetInt('i', 0);
-  if ($i > 0) {
-    $titled_name = getTitledNameById($i);
-    $foe_count = getTrackingData($i, sg_track_foe);
-    include '_profilemenu.php';
-  } else {
-    $foe_count = $_SESSION['tracking'][sg_track_foe];
+    $i = getGetInt( 'i', 0 );
+    if ( $i > 0 ) {
+        $titled_name = getTitledNameById( $i );
+        $foe_count = getTrackingData( $i, sg_track_foe );
+        include '_profilemenu.php';
+    } else {
+        $foe_count = $_SESSION[ 'tracking' ][ sg_track_foe ];
+        include '_charmenu.php';
+    }
+
+    echo '<h3>Top foes slain:</h3>';
+
+    arsort( $foe_count );
+    $foe_count = array_slice( $foe_count, 0, 20, $preserve_keys=TRUE );
+    $foe_names = getFoeNames( array_keys( $foe_count ) );
+
+    echo '<p>';
+    foreach ( $foe_count as $k => $v ) {
+        echo '<b>' . utf8_encode( $foe_names[ $k ][ 'name' ] ) . '</b>: ' .
+             $v . ' killed<br>';
+    }
+    echo '</p>';
+
+} elseif ( 'tu' == $a ) {
+
+    $i = getGetInt( 'i', 0 );
+    if ( $i > 0 ) {
+        $titled_name = getTitledNameById( $i );
+        $use_count = getTrackingData( $i, sg_track_use );
+        include '_profilemenu.php';
+    } else {
+        $use_count = $_SESSION[ 'tracking' ][ sg_track_use ];
+        include '_charmenu.php';
+    }
+
+    echo '<h3>Top artifacts used:</h3>';
+
+    arsort( $use_count );
+    $use_count = array_slice( $use_count, 0, 20, $preserve_keys=TRUE );
+    $use_obj = getArtifactArray( array_keys( $use_count ) );
+
+    echo '<p>';
+    foreach ( $use_count as $k => $v ) {
+        echo renderArtifactStr( $use_obj[ $k ] ) . ': ' . $v . ' used<br>';
+    }
+    echo '</p>';
+
+} elseif ( 'al' == $a ) {
+
     include '_charmenu.php';
-  }
 
-  echo '<h3>Top foes slain:</h3>';
+    $allies = getUserAllies( $_SESSION[ 'u' ] );
 
-  arsort($foe_count);
-  $foe_count = array_slice($foe_count, 0, 20, $preserve_keys=TRUE);
-  $foe_names = getFoeNames(array_keys($foe_count));
+    $ally_id = getGetInt( 'i', -1 );
+    $action_id = getGetInt( 'action', 0 );
+    if ( ( $ally_id > -1 ) && ( $action_id == $char_obj->c[ 'action_id' ] ) ) {
+        if ( ( $ally_id == 0 ) || ( isset( $allies[ $ally_id ] ) ) ) {
+            if ( $char_obj->c[ 'ally_id' ] > 0 ) {
+                addUserAlly( $char_obj );
+            }
+            if ( $ally_id > 0 ) {
+                $char_obj->setIntVar( 'ally_id', $allies[ $ally_id ][ 'id' ] );
+                $char_obj->setIntVar( 'ally_fatigue', $allies[ $ally_id ][ 'fatigue' ] );
+                deleteUserAlly( $char_obj->c[ 'user_id' ], $ally_id );
+                $char_obj->c[ 'ally' ] = getAlly( $char_obj );
+                echo '<p class="tip">You take a new ally!</p>';
+            } else {
+                $char_obj->setIntVar( 'ally_id', 0 );
+                echo '<p class="tip">You send your ally back to their residence.</p>';
+            }
+            unset( $_SESSION[ 'ally' ] );
 
-  echo '<p>';
-  foreach ($foe_count as $k => $v) {
-    echo '<b>' . utf8_encode($foe_names[$k]['name']) . '</b>: ' .
-         $v . ' killed<br>';
-  }
-  echo '</p>';
-
-} elseif ('tu' == $a) {
-
-  $i = getGetInt('i', 0);
-  if ($i > 0) {
-    $titled_name = getTitledNameById($i);
-    $use_count = getTrackingData($i, sg_track_use);
-    include '_profilemenu.php';
-  } else {
-    $use_count = $_SESSION['tracking'][sg_track_use];
-    include '_charmenu.php';
-  }
-
-  echo '<h3>Top artifacts used:</h3>';
-
-  arsort($use_count);
-  $use_count = array_slice($use_count, 0, 20, $preserve_keys=TRUE);
-  $use_obj = getArtifactArray(array_keys($use_count));
-
-  echo '<p>';
-  foreach ($use_count as $k => $v) {
-    echo renderArtifactStr($use_obj[$k]) . ': ' . $v . ' used<br>';
-  }
-  echo '</p>';
-
-} elseif ('al' == $a) {
-
-  include '_charmenu.php';
-
-  if (sg_allies_enabled) {
-
-  $allies = getUserAllies($_SESSION['u']);
-
-  $ally_id = getGetInt('i', -1);
-  $action_id = getGetInt('action', 0);
-  if (($ally_id > -1) && ($action_id == $char_obj->c['action_id'])) {
-    if (($ally_id == 0) || (isset($allies[$ally_id]))) {
-      if ($char_obj->c['ally_id'] > 0) {
-        addUserAlly($char_obj);
-      }
-      if ($ally_id > 0) {
-        $char_obj->setIntVar('ally_id', $allies[$ally_id]['id']);
-        $char_obj->setIntVar('ally_fatigue', $allies[$ally_id]['fatigue']);
-        deleteUserAlly($char_obj->c['user_id'], $ally_id);
-        $char_obj->c['ally'] = getAlly($char_obj);
-        echo '<p class="tip">You take a new ally!</p>';
-      } else {
-        $char_obj->setIntVar('ally_id', 0);
-        echo '<p class="tip">You send your ally back to their residence.</p>';
-      }
-      unset($_SESSION['ally']);
-
-      $allies = getUserAllies($_SESSION['u']);
+            $allies = getUserAllies( $_SESSION[ 'u' ] );
+        }
     }
-  }
 
-  echo '<h3>Current Ally</h3>';
-  if ($char_obj->c['ally_id'] == 0) {
-    echo '<p><b>None</b></p>';
-  } else {
-    echo '<p><b onmouseover="popup(\'' . $char_obj->c['ally']['description'] .
-         '\');" ' . 'onmouseout="popout()">' . $char_obj->c['ally']['name'] .
-         '</b><br>' .
-         $char_obj->c['ally']['title'] . '<br>Fatigue: ' .
-         floor($char_obj->c['ally_fatigue'] / 1000) . '%<br>' .
-         '<font size="-2">(<a href="char.php?a=al&i=0&action=' .
-         $char_obj->c['action_id'] . '">dismiss for now</a>)</font></p>';
-    echo awardAchievement($char_obj, 48);
-  }
-
-  echo '<h3>Your Allies:</h3>';
-
-  if (count($allies) == 0) {
-    echo '<p>You have no allies waiting in your barracks!</p>';
-  } else {
-    echo '<center><table cellpadding="3">';
-    echo '<tr><th>Name</th><th>Class</th><th>Fatigue</th><th>Action</th></tr>';
-    foreach ($allies as $x) {
-      $x['description'] = str_replace('\'', '&#039;', $x['description']);
-      $x['description'] = getEscapeQuoteStr($x['description']);
-      echo '<tr align="center"><td><b onmouseover="popup(\'' .
-           $x['description'] .
-           '\');" ' . 'onmouseout="popout()">' . $x['name'] . '</b></td>' .
-           '<td>' . $x['title'] . '</td><td>' . floor($x['fatigue'] / 1000) .
-           '%</td><td><font size="-2">(<a href="char.php?a=al&i=' . $x['id'] .
-           '&action=' . $char_obj->c['action_id'] .
-           '">take with you</a>)</font></td></tr>';
+    echo '<h3>Current Ally</h3>';
+    if ( $char_obj->c[ 'ally_id' ] == 0 ) {
+        echo '<p><b>None</b></p>';
+    } else {
+        echo '<p><b onmouseover="popup(\'' . $char_obj->c[ 'ally' ][ 'description' ] .
+             '\');" ' . 'onmouseout="popout()">' . $char_obj->c[ 'ally' ][ 'name' ] .
+             '</b><br>' .
+             $char_obj->c[ 'ally' ][ 'title' ] . '<br>Fatigue: ' .
+             floor( $char_obj->c[ 'ally_fatigue' ] / 1000 ) . '%<br>' .
+             '<font size="-2">(<a href="char.php?a=al&i=0&action=' .
+             $char_obj->c[ 'action_id' ] . '">dismiss for now</a>)</font></p>';
+        echo awardAchievement( $char_obj, 48 );
     }
-    echo '</table></center>';
-  }
 
-  }
+    echo '<h3>Your Allies:</h3>';
 
-} elseif ('pl' == $a) {
-
-  $i = getGetInt('i', 0);
-  if ($i > 0) {
-    $titled_name = getTitledNameById($i);
-    include '_profilemenu.php';
-    $plots = getAllPlots($i);
-  } else {
-    include '_charmenu.php';
-    echo '<h3>Land Plots:</h3>';
-    $plots = getAllPlots($char_obj->c['id']);
-  }
-
-  if (count($plots) == 0) {
-    echo '<p>No land plots owned!</p>';
-  } else {
-    foreach ($plots as $plot) {
-      echo '<p><a href="plot.php?i=' . $plot['id'] . '">' . $plot['title'] .
-           '</a><br>' . $plot['description'] . '</p>';
+    if ( count( $allies ) == 0 ) {
+        echo '<p>You have no allies waiting in your barracks!</p>';
+    } else {
+        echo '<center><table cellpadding="3">';
+        echo '<tr><th>Name</th><th>Class</th><th>Fatigue</th><th>Action</th></tr>';
+        foreach ( $allies as $x ) {
+            $x[ 'description' ] = str_replace( '\'', '&#039;', $x[ 'description' ] );
+            $x[ 'description' ] = getEscapeQuoteStr( $x[ 'description' ] );
+            echo '<tr align="center"><td><b onmouseover="popup(\'' .
+                 $x[ 'description' ] .
+                 '\');" ' . 'onmouseout="popout()">' . $x[ 'name' ] . '</b></td>' .
+                 '<td>' . $x[ 'title' ] . '</td><td>' . floor( $x[ 'fatigue' ] / 1000 ) .
+                 '%</td><td><font size="-2">(<a href="char.php?a=al&i=' . $x[ 'id' ] .
+                 '&action=' . $char_obj->c[ 'action_id' ] .
+                 '">take with you</a>)</font></td></tr>';
+        }
+        echo '</table></center>';
     }
-  }
+
+} elseif ( 'pl' == $a ) {
+
+    $i = getGetInt( 'i', 0 );
+    if ( $i > 0 ) {
+        $titled_name = getTitledNameById( $i );
+        include '_profilemenu.php';
+        $plots = getAllPlots( $i );
+    } else {
+        include '_charmenu.php';
+        echo '<h3>Land Plots:</h3>';
+        $plots = getAllPlots( $char_obj->c[ 'id' ] );
+    }
+
+    if ( count( $plots ) == 0 ) {
+        echo '<p>No land plots owned!</p>';
+    } else {
+        foreach ( $plots as $plot ) {
+            echo '<p><a href="plot.php?i=' . $plot[ 'id' ] . '">' . $plot[ 'title' ] .
+                 '</a><br>' . $plot[ 'description' ] . '</p>';
+        }
+    }
 
 }
 
@@ -1098,13 +1090,13 @@ require '_footer.php';
 $save = $char_obj->save();
 $log_save = $log_obj->save();
 
-if (sg_debug) {
-  debugPrint('<!--'); debugPrint($char); debugPrint('-->');
+if ( sg_debug ) {
+    debugPrint( '<!--' ); debugPrint( $char ); debugPrint( '-->' );
 }
 
 $debug_time_diff = debugTime() - $debug_time_start;
-debugPrint('<font size="-2">Page rendered in ' .
-    number_format($debug_time_diff, 2, ".", ".") . 's</font>');
+debugPrint( '<font size="-2">Page rendered in ' .
+    number_format( $debug_time_diff, 2, ".", "." ) . 's</font>' );
 
 ?>
 
