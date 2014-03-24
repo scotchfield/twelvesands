@@ -334,202 +334,183 @@ if ( '0' == $a ) {
         } ?>
   </li>
   <li>Chest: <? renderArtifact( $char[ 'armour_chest' ] );
-       if ( $char[ 'armour_chest' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                    sg_artifact_armour_chest . '&i=0">x</a>)</font>';
-           }
+        if ( $char[ 'armour_chest' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                     sg_artifact_armour_chest . '&i=0">x</a>)</font>';
+            }
         } ?>
   </li>
   <li>Hands: <? renderArtifact( $char[ 'armour_hands' ] );
-       if ( $char[ 'armour_hands' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                    sg_artifact_armour_hands . '&i=0">x</a>)</font>';
-           }
-       } ?>
+        if ( $char[ 'armour_hands' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                     sg_artifact_armour_hands . '&i=0">x</a>)</font>';
+            }
+        } ?>
   </li>
   <li>Wrists: <? renderArtifact( $char[ 'armour_wrists' ] ); 
-       if ( $char[ 'armour_wrists' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                    sg_artifact_armour_wrists . '&i=0">x</a>)</font>';
-           }
-       } ?>
+        if ( $char[ 'armour_wrists' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                     sg_artifact_armour_wrists . '&i=0">x</a>)</font>';
+            }
+        } ?>
   </li>
   <li>Belt: <? renderArtifact( $char[ 'armour_belt' ] );
-       if ( $char[ 'armour_belt' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                    sg_artifact_armour_belt . '&i=0">x</a>)</font>';
-           }
-       } ?>
+        if ( $char[ 'armour_belt' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                     sg_artifact_armour_belt . '&i=0">x</a>)</font>';
+            }
+        } ?>
   </li>
   <li>Pants: <? renderArtifact( $char[ 'armour_legs' ] );
-       if ( $char[ 'armour_legs' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                     sg_artifact_armour_legs . '&i=0">x</a>)</font>';
-           }
-       } ?>
+        if ( $char[ 'armour_legs' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                      sg_artifact_armour_legs . '&i=0">x</a>)</font>';
+            }
+        } ?>
   </li>
   <li>Boots: <? renderArtifact( $char[ 'armour_boots' ] );
-       if ( $char[ 'armour_boots' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                    sg_artifact_armour_boots . '&i=0">x</a>)</font>';
-           }
-       } ?>
+        if ( $char[ 'armour_boots' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                     sg_artifact_armour_boots . '&i=0">x</a>)</font>';
+            }
+        } ?>
   </li>
   <li>Ring: <? renderArtifact( $char[ 'armour_ring' ] );
-       if ( $char[ 'armour_ring' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                     sg_artifact_armour_ring . '&i=0&s=1">x</a>)</font>';
-           }
-       } ?>
+        if ( $char[ 'armour_ring' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                      sg_artifact_armour_ring . '&i=0&s=1">x</a>)</font>';
+            }
+        } ?>
   </li>
   <li>Ring: <? renderArtifact( $char[ 'armour_ring_2' ] );
-       if ( $char[ 'armour_ring_2' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                     sg_artifact_armour_ring . '&i=0&s=2">x</a>)</font>';
-           }
-       } ?>
+        if ( $char[ 'armour_ring_2' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                      sg_artifact_armour_ring . '&i=0&s=2">x</a>)</font>';
+            }
+        } ?>
   </li>
   <li>Trinket: <? renderArtifact( $char[ 'armour_trinket' ] );
-       if ( $char[ 'armour_trinket' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                    sg_artifact_armour_trinket . '&i=0&s=1">x</a>)</font>';
-           }
-       } ?>
+        if ( $char[ 'armour_trinket' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                     sg_artifact_armour_trinket . '&i=0&s=1">x</a>)</font>';
+            }
+        } ?>
   </li>
   <li>Trinket: <? renderArtifact( $char[ 'armour_trinket_2' ] );
-       if ( $char[ 'armour_trinket_2' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                    sg_artifact_armour_trinket . '&i=0&s=2">x</a>)</font>';
-           }
-       } ?>
+        if ( $char[ 'armour_trinket_2' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                     sg_artifact_armour_trinket . '&i=0&s=2">x</a>)</font>';
+            }
+        } ?>
   </li>
   <li>Trinket: <? renderArtifact( $char[ 'armour_trinket_3' ] );
-       if ( $char[ 'armour_trinket_3' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-               echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
-                    sg_artifact_armour_trinket . '&i=0&s=3">x</a>)</font>';
-           }
-       } ?>
+        if ( $char[ 'armour_trinket_3' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '&nbsp;<font size="-2">(<a href="char.php?a=aa&t=' .
+                     sg_artifact_armour_trinket . '&i=0&s=3">x</a>)</font>';
+            }
+        } ?>
   </li>
   </ul>
 
   <p><span class="section_header">Equipped Mount</span><?
-       if ( FALSE == $i ) { ?><br>
+        if ( FALSE == $i ) { ?><br>
   <font size="-2">(<a href="inventory.php">equip something else</a>)</font><?
-       } ?></p>
+        } ?></p>
   <p><? renderArtifact($char['mount']); ?>
-  <?   if ( $char[ 'mount' ][ 'id' ] != 0 ) {
-           if ( $i == FALSE ) {
-  echo '<font size="-2">(<a href="char.php?a=am&i=0">x</a>)</font>';
-           }
-       } ?>
+  <?    if ( $char[ 'mount' ][ 'id' ] != 0 ) {
+            if ( $i == FALSE ) {
+                echo '<font size="-2">(<a href="char.php?a=am&i=0">x</a>)</font>';
+            }
+        } ?>
   </p>
 
 <?
-       if ( sg_allies_enabled ) {
-           echo '<p><span class="section_header">Current Ally</span>';
-           if ( FALSE == $i ) {
-               echo '<br><font size="-2">(<a href="char.php?a=al">' .
-                    'bring someone else</a>)</font>';
-           }
-           echo '</p><p>';
-           if ( $char[ 'ally_id' ] == 0 ) {
-               if ( FALSE == $i ) {
-        echo '<b>None</b><br><font size="-2">(<a href="main.php?z=127">' .
-           'visit Allied Contracting</a>)</font>';
-      } else {
-        echo '<b>None</b>';
-      }
-    } else {
-      echo '<b onmouseover="popup(\'' . $char['ally']['description'] .
-           '\');" ' . 'onmouseout="popout()">' . $char['ally']['name'] .
-           '</b><br>' . $char['ally']['title'] . '<br>Fatigue: ' .
-           floor($char['ally_fatigue'] / 1000) . '%';
-    }
-    echo '</p>';
-  }
+        if ( sg_allies_enabled ) {
+            echo '<p><span class="section_header">Current Ally</span>';
+            if ( FALSE == $i ) {
+                echo '<br><font size="-2">(<a href="char.php?a=al">' .
+                     'bring someone else</a>)</font>';
+            }
+            echo '</p><p>';
+            if ( $char[ 'ally_id' ] == 0 ) {
+                if ( FALSE == $i ) {
+                    echo '<b>None</b><br><font size="-2">(<a href="main.php?z=127">' .
+                         'visit Allied Contracting</a>)</font>';
+                } else {
+                    echo '<b>None</b>';
+                }
+            } else {
+                echo '<b onmouseover="popup(\'' . $char[ 'ally' ][ 'description' ] .
+                     '\');" ' . 'onmouseout="popout()">' . $char[ 'ally' ][ 'name' ] .
+                     '</b><br>' . $char[ 'ally' ][ 'title' ] . '<br>Fatigue: ' .
+                     floor( $char[ 'ally_fatigue' ] / 1000 ) . '%';
+            }
+            echo '</p>';
+        }
 ?>
 
   <p><span class="section_header">Guild</span></p>
 
   <?
-    if (($char['guild_id'] == 0) || ($char['guild_rank'] > 5)) {
-      if (FALSE == $i) {
-        echo '<p><b>None</b><br><font size="-2">(<a href="guild.php">' .
-           'view guilds</a>)</font></p>';
-      } else {
-        echo '<p><b>None</b></p>';
-      }
-    } else {
-      echo '<p><a href="guild.php?i=' . $char['guild_id'] . '">' .
-           $char['guild_name'] . '</a></p>';
-    }
+        if ( ( $char[ 'guild_id' ] == 0 ) || ( $char[ 'guild_rank' ] > 5 ) ) {
+            if ( FALSE == $i ) {
+                echo '<p><b>None</b><br><font size="-2">(<a href="guild.php">' .
+                     'view guilds</a>)</font></p>';
+            } else {
+                echo '<p><b>None</b></p>';
+            }
+        } else {
+            echo '<p><a href="guild.php?i=' . $char[ 'guild_id' ] . '">' .
+                 $char[ 'guild_name' ] . '</a></p>';
+        }
   ?>
 
   <p><span class="section_header">Reputation</span></p>
 
   <?
-    foreach($char['reputations'] as $rep) {
-      $show_stores = ($i == FALSE);
-      echo renderReputation($char_obj, $rep, $show_stores) . '<br>';
-    }
-    if (count($char['reputations']) == 0) {
-      echo '<p><b>None</b></p>';
-    }
+        foreach ( $char[ 'reputations' ] as $rep ) {
+            $show_stores = ( $i == FALSE );
+            echo renderReputation( $char_obj, $rep, $show_stores ) . '<br>';
+        }
+        if ( count( $char[ 'reputations' ] ) == 0 ) {
+            echo '<p><b>None</b></p>';
+        }
   ?>
-
-
-
-<? /*SKILLS
-  <p><span class="section_header">Character Skills</span><br>
-  <font size="-2">(mouseover for description)</font></p>
-
-< ?
-  if (count($char['skills']) > 0) {
-    echo '<ul class="char_list">';
-    foreach($char['skills'] as $skill) {
-      echo '<li><span onmouseover="popup(\'<b>' . $skill['name'] . '</b><br>' .
-           $skill['description'] . '\')" onmouseout="popout()">' .
-           $skill['name'] . '</span></li>';
-    }
-    echo '</ul>';
-  }
-  */
-?>
 
 </div></td></tr></table>
 
 <?
 
-    if (FALSE != $i) {
-      echo '<p><a href="main.php?z=13">Back to the Hall of Records</a></p>';
+        if ( FALSE != $i ) {
+            echo '<p><a href="main.php?z=13">Back to the Hall of Records</a></p>';
+        }
+
     }
 
-  }
+} elseif ( ( 'a' == $a ) || ( 'aa' == $a ) || ( 'am' == $a ) ) {
 
-} elseif (('a' == $a) || ('aa' == $a) || ('am' == $a)) {
+    include '_charmenu.php';
 
-  include '_charmenu.php';
+    foreach ( $char_state_obj[ 'out' ] as $st ) {
+        echo $st;
+    }
 
-  foreach ($char_state_obj['out'] as $st) {
-    echo $st;
-  }
+    echo '<p><a href="char.php">Go back to your character page</a></p>';
 
-  echo '<p><a href="char.php">Go back to your character page</a></p>';
+} elseif ( 't' == $a ) {
 
-} elseif ('t' == $a) {
-
-  include '_charmenu.php';
+    include '_charmenu.php';
 
 ?>
 
@@ -538,17 +519,17 @@ if ( '0' == $a ) {
   <ul class="char_list">
   <?
     $title_found = false;
-    echo '<li><a href="char.php?a=tc&i=0">' . $char_obj->c['name'] .
+    echo '<li><a href="char.php?a=tc&i=0">' . $char_obj->c[ 'name' ] .
          '</a> (default)</li>';
-    foreach($char_obj->c['skills'] as $skill) {
-      if ($skill['title_granted'] != '_') {
-        echo '<li><a href="char.php?a=tc&i=' . $skill['id'] . '">' .
-             str_replace('_', $char_obj->c['name'], $skill['title_granted']) .
-             '</a> (from ' . $skill['name'] . ')</li>';
-        $title_found = true;
-      }
+    foreach ( $char_obj->c[ 'skills' ] as $skill ) {
+        if ( $skill[ 'title_granted' ] != '_' ) {
+            echo '<li><a href="char.php?a=tc&i=' . $skill[ 'id' ] . '">' .
+                 str_replace( '_', $char_obj->c[ 'name' ], $skill[ 'title_granted' ] ) .
+                 '</a> (from ' . $skill[ 'name' ] . ')</li>';
+            $title_found = true;
+        }
     }
-    if (!$title_found) {
+    if ( ! $title_found ) {
       echo '<li>You don\'t have any skills that would confer a title!</li>';
     }
   ?>
@@ -556,9 +537,9 @@ if ( '0' == $a ) {
 
 <?
 
-} elseif ('av' == $a) {
+} elseif ( 'av' == $a ) {
 
-  include '_charmenu.php';
+    include '_charmenu.php';
 
   $avatars = getAvatars($char_obj->c['id']);
 
