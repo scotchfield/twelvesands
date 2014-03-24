@@ -530,7 +530,7 @@ if ( '0' == $a ) {
         }
     }
     if ( ! $title_found ) {
-      echo '<li>You don\'t have any skills that would confer a title!</li>';
+        echo '<li>You don\'t have any skills that would confer a title!</li>';
     }
   ?>
   </ul>
@@ -541,43 +541,43 @@ if ( '0' == $a ) {
 
     include '_charmenu.php';
 
-  $avatars = getAvatars($char_obj->c['id']);
+    $avatars = getAvatars( $char_obj->c[ 'id' ] );
 
-  $avatar_id = getGetInt('i', 0);
-  if (($avatar_id > 0) && (isset($avatars[$avatar_id]))) {
-    $char_obj->setAvatar($avatars[$avatar_id]['filename']);
-    echo '<p class="tip">Avatar changed!</p>';
-  }
+    $avatar_id = getGetInt( 'i', 0 );
+    if ( ( $avatar_id > 0 ) && ( isset( $avatars[ $avatar_id ] ) ) ) {
+        $char_obj->setAvatar( $avatars[ $avatar_id ][ 'filename' ] );
+        echo '<p class="tip">Avatar changed!</p>';
+    }
 
-  echo '<p><span class="section_header">Avatars available to you:</span></p>';
-  echo '<center><table class="plain" width="500">';
+    echo '<p><span class="section_header">Avatars available to you:</span></p>';
+    echo '<center><table class="plain" width="500">';
 
-  foreach ($avatars as $avatar) {
-    echo '<tr><td align="center" width="50%"><img src="/images/avatar/' .
-         $avatar['filename'] . '" width="200" height="200"></td>' .
-         '<td align="center">' . $avatar['name'] .
-         '<br><font size="-2">(<a href="char.php?a=av&i=' .
-         $avatar['id'] . '">use this</a>)</font></td></tr>';
-  }
-  echo '</table></center>';
+    foreach ( $avatars as $avatar ) {
+        echo '<tr><td align="center" width="50%"><img src="images/avatar/' .
+             $avatar[ 'filename' ] . '" width="200" height="200"></td>' .
+             '<td align="center">' . $avatar[ 'name' ] .
+             '<br><font size="-2">(<a href="char.php?a=av&i=' .
+             $avatar[ 'id' ] . '">use this</a>)</font></td></tr>';
+    }
+    echo '</table></center>';
 
-} elseif (('tc' == $a) || ('rmr' == $a)) {
+} elseif ( ( 'tc' == $a ) || ( 'rmr' == $a ) ) {
 
-  include '_charmenu.php';
+    include '_charmenu.php';
 
-  foreach ($char_state_obj['out'] as $st) {
-    echo $st;
-  }
+    foreach ( $char_state_obj[ 'out' ] as $st ) {
+        echo $st;
+    }
 
-} elseif (('admin' == $a) && ($char_obj->c['user_id'] == 1)) {
+} elseif ( ( 'admin' == $a ) && ( $char_obj->c[ 'user_id' ] == 1 ) ) {
 
-  include '_charmenu.php';
+    include '_charmenu.php';
 
-  echo '<p><b>Admin Panel</b></p>';
+    echo '<p><b>Admin Panel</b></p>';
 
-  foreach ($char_state_obj['out'] as $st) {
-    echo $st;
-  }
+    foreach ( $char_state_obj[ 'out' ] as $st ) {
+        echo $st;
+    }
 
 ?>
 
@@ -610,129 +610,125 @@ if ( '0' == $a ) {
 
 <?
 
-} elseif ('r' == $a) {
+} elseif ( 'r' == $a ) {
 
-  include '_charmenu.php';
+    include '_charmenu.php';
 
-  $i = getGetStr('i', '0');
+    $i = getGetStr( 'i', '0' );
 
-  $artifact = hasArtifact($char_obj, $i);
-//  $artifact = hasArtifactNew($char_obj, $i, 0);
+    $artifact = hasArtifact( $char_obj, $i );
 
-  if (FALSE == $artifact) {
-    echo '<p>You don\'t have that artifact!</p>';
-  } elseif ($char_obj->c['level'] < $artifact['min_level']) {
-    echo '<p>Your level isn\'t high enough to use that artifact!</p>';
-  } else {
+    if ( FALSE == $artifact ) {
+        echo '<p>You don\'t have that artifact!</p>';
+    } elseif ( $char_obj->c[ 'level' ] < $artifact[ 'min_level' ] ) {
+        echo '<p>Your level isn\'t high enough to use that artifact!</p>';
+    } else {
+        echo '<p>' . renderArtifactStr( $artifact ) . '</p>';
+        include '_read.php';
+    }
 
-    echo '<p>' . renderArtifactStr($artifact) . '</p>';
+    echo '<p><a href="char.php">Go back to your character page</a></p>';
 
-    include '_read.php';
+} elseif ( 'ql' == $a ) {
 
-  }
+    include '_charmenu.php';
 
-  echo '<p><a href="char.php">Go back to your character page</a></p>';
+    $status = getGetInt( 'ss', 0 );
+    if ( 1 == $status ) {
+        echo '<p class="tip">All available quests accepted!</p>';
+    } elseif ( 2 == $status ) {
+        echo '<p class="tip">You\'ve already accepted all available quests.</p>';
+    }
 
-} elseif ('ql' == $a) {
+    echo '<p><span class="section_header">Quests in progress:</span><br>';
+    if ( $s == 0 ) {
+        echo '<font size="-2">(<a href="char.php?a=ql&s=1">full view</a>)</font>';
+    } else {
+        echo '<font size="-2">(<a href="char.php?a=ql">brief view</a>)</font>';
+    }
+    echo '</p>';
 
-  include '_charmenu.php';
+    $quests = getCharQuests( $char_obj->c[ 'id' ] );
 
-  $status = getGetInt('ss', 0);
-  if (1 == $status) {
-    echo '<p class="tip">All available quests accepted!</p>';
-  } elseif (2 == $status) {
-    echo '<p class="tip">You\'ve already accepted all available quests.</p>';
-  }
+    $artifact_id_obj = array();
+    foreach ( $quests as $q ) {
+        $artifact_id_obj[ $q[ 'quest_artifact1' ] ] = True;
+        $artifact_id_obj[ $q[ 'quest_artifact2' ] ] = True;
+        $artifact_id_obj[ $q[ 'quest_artifact3' ] ] = True;
+        $artifact_id_obj[ $q[ 'reward_artifact' ] ] = True;
+    }
 
-  echo '<p><span class="section_header">Quests in progress:</span><br>';
-  if ($s == 0) {
-    echo '<font size="-2">(<a href="char.php?a=ql&s=1">full view</a>)</font>';
-  } else {
-    echo '<font size="-2">(<a href="char.php?a=ql">brief view</a>)</font>';
-  }
-  echo '</p>';
+    $artifact_retrieve = array();
+    foreach ( $artifact_id_obj as $k => $v ) {
+        $artifact_retrieve[] = intval( $k );
+    }
 
-  $quests = getCharQuests($char_obj->c['id']);
+    if ( count( $artifact_retrieve ) > 0) {
+        $artifact_obj = getArtifactArray( $artifact_retrieve );
+    } else {
+        $artifact_obj = array();
+    }
 
-  $artifact_id_obj = array();
-  foreach ($quests as $q) {
-    $artifact_id_obj[$q['quest_artifact1']] = True;
-    $artifact_id_obj[$q['quest_artifact2']] = True;
-    $artifact_id_obj[$q['quest_artifact3']] = True;
-    $artifact_id_obj[$q['reward_artifact']] = True;
-  }
+    foreach ( $quests as $q ) {
+        if ( sg_quest_in_progress == $q[ 'status' ] ) {
+            if ( ( $s == 0 ) && ( $q[ 'hidden' ] != 0 ) ) {
+                continue;
+            }
 
-  $artifact_retrieve = array();
-  foreach ($artifact_id_obj as $k => $v) {
-    $artifact_retrieve[] = intval($k);
-  }
+        echo '<p><b>' . $q[ 'name' ] . '</b> ';
+        if ( ( ( $s != 0 ) && ( $q[ 'hidden' ] == 0 ) ) || ( $s == 0 ) ) {
+            echo '(<a href="action.php?a=qh&i=' . $q[ 'id' ] . '">hide quest</a>) ';
+        } else {
+            echo '(<a href="action.php?a=qh&i=' . $q[ 'id' ] . '">show quest</a>) ';
+        }
+        echo '(<i>Level ' . $q[ 'min_level' ] .
+             '</i>, <a href="talk.php?t=' .
+             $q[ 'npc_id' ] . '&q=' . $q[ 'id' ] . '">quest giver</a>): ' .
+             $q[ 'text' ];
+        if ( $q[ 'quest_artifact1' ] > 0 ) {
+            echo '<br><u>Artifacts to retrieve:</u>';
+            $artifact = $artifact_obj[ $q[ 'quest_artifact1' ] ];
+            $c_count = min( getArtifactQuantity( $char_obj, $q[ 'quest_artifact1' ] ),
+                            $q[ 'quest_quantity1' ] );
+            echo '<br>' . $c_count . ' / ' . $q[ 'quest_quantity1' ] . ': ';
+            echo renderArtifactStr( $artifact, $q[ 'quest_quantity1' ] );
 
-  if (count($artifact_retrieve) > 0) {
-    $artifact_obj = getArtifactArray($artifact_retrieve);
-  } else {
-    $artifact_obj = array();
-  }
-
-  foreach ($quests as $q) {
-    if (sg_quest_in_progress == $q['status']) {
-      if (($s == 0) && ($q['hidden'] != 0)) {
-        continue;
-      }
-
-      echo '<p><b>' . $q['name'] . '</b> ';
-      if ((($s != 0) && ($q['hidden'] == 0)) || ($s == 0)) {
-        echo '(<a href="action.php?a=qh&i=' . $q['id'] . '">hide quest</a>) ';
-      } else {
-        echo '(<a href="action.php?a=qh&i=' . $q['id'] . '">show quest</a>) ';
-      }
-      echo '(<i>Level ' . $q['min_level'] .
-          '</i>, <a href="talk.php?t=' .
-          $q['npc_id'] . '&q=' . $q['id'] . '">quest giver</a>): ' .
-          $q['text'];
-      if ($q['quest_artifact1'] > 0) {
-        echo '<br><u>Artifacts to retrieve:</u>';
-        $artifact = $artifact_obj[$q['quest_artifact1']];
-        $c_count = min(getArtifactQuantity($char_obj, $q['quest_artifact1']),
-                       $q['quest_quantity1']);
-        echo '<br>' . $c_count . ' / ' . $q['quest_quantity1'] . ': ';
-        echo renderArtifactStr($artifact, $q['quest_quantity1']);
-
-        if ($q['quest_artifact2'] > 0) {
-          $artifact = $artifact_obj[$q['quest_artifact2']];
-          $c_count = min(getArtifactQuantity($char_obj, $q['quest_artifact2']),
-                         $q['quest_quantity2']);
-          echo '<br>' . $c_count . ' / ' . $q['quest_quantity2'] . ': ';
-          echo renderArtifactStr($artifact, $q['quest_quantity2']);
+        if ( $q[ 'quest_artifact2' ] > 0 ) {
+            $artifact = $artifact_obj[ $q[ 'quest_artifact2' ] ];
+            $c_count = min( getArtifactQuantity( $char_obj, $q[ 'quest_artifact2' ] ),
+                            $q[ 'quest_quantity2' ] );
+            echo '<br>' . $c_count . ' / ' . $q[ 'quest_quantity2' ] . ': ';
+            echo renderArtifactStr( $artifact, $q[ 'quest_quantity2' ] );
         }
 
-        if ($q['quest_artifact3'] > 0) {
-          $artifact = $artifact_obj[$q['quest_artifact3']];
-          $c_count = min(getArtifactQuantity($char_obj, $q['quest_artifact3']),
-                         $q['quest_quantity3']);
-          echo '<br>' . $c_count . ' / ' . $q['quest_quantity3'] . ': ';
-          echo renderArtifactStr($artifact, $q['quest_quantity3']);
+        if ( $q[ 'quest_artifact3' ] > 0 ) {
+            $artifact = $artifact_obj[ $q[ 'quest_artifact3' ] ];
+            $c_count = min( getArtifactQuantity( $char_obj, $q[ 'quest_artifact3' ] ),
+                           $q[ 'quest_quantity3' ] );
+            echo '<br>' . $c_count . ' / ' . $q[ 'quest_quantity3' ] . ': ';
+            echo renderArtifactStr( $artifact, $q[ 'quest_quantity3' ] );
         }
 
-      }
-      if ($q['quest_foe1'] > 0) {
+    }
+    if ( $q[ 'quest_foe1' ] > 0 ) {
         echo '<br><u>Foes slain:</u>';
-        $f = getFoe($char_obj, $q['quest_foe1']);
-        echo '<br>' . $q['foe_count_1'] . ' / ' .
-             $q['quest_foe_quantity1'] . ': ' . $f['name'];
+        $f = getFoe( $char_obj, $q[ 'quest_foe1' ] );
+        echo '<br>' . $q[ 'foe_count_1' ] . ' / ' .
+             $q[ 'quest_foe_quantity1' ] . ': ' . $f[ 'name' ];
 
-        if ($q['quest_foe2'] > 0) {
-          $f = getFoe($char_obj, $q['quest_foe2']);
-          echo '<br>' . $q['foe_count_2'] . ' / ' .
-               $q['quest_foe_quantity2'] . ': ' . $f['name'];
+        if ( $q[ 'quest_foe2' ] > 0 ) {
+          $f = getFoe( $char_obj, $q[ 'quest_foe2' ] );
+          echo '<br>' . $q[ 'foe_count_2' ] . ' / ' .
+               $q[ 'quest_foe_quantity2' ] . ': ' . $f[ 'name' ];
         }
 
-        if ($q['quest_foe3'] > 0) {
-          $f = getFoe($char_obj, $q['quest_foe3']);
-          echo '<br>' . $q['foe_count_3'] . ' / ' .
-               $q['quest_foe_quantity3'] . ': ' . $f['name'];
+        if ( $q[ 'quest_foe3' ] > 0 ) {
+          $f = getFoe( $char_obj, $q[ 'quest_foe3' ] );
+          echo '<br>' . $q[ 'foe_count_3' ] . ' / ' .
+               $q[ 'quest_foe_quantity3' ] . ': ' . $f[ 'name' ];
         }
-      }
-      if ($q['reward_quantity'] > 0) {
+    }
+    if ($q['reward_quantity'] > 0) {
         echo '<br><u>Rewards:</u>';
         if ($q['reward_artifact'] == 0) {
           echo '<br>' . $q['reward_quantity'] . ' gold';
@@ -741,11 +737,11 @@ if ( '0' == $a ) {
           echo '<br>' . $q['reward_quantity'] . 'x ' .
                renderArtifactStr($a, $q['reward_quantity']);
         }
-      }
-      if ($q['reward_xp'] > 0) {
+    }
+    if ($q['reward_xp'] > 0) {
         echo '<br>' . $q['reward_xp'] . ' XP';
-      }
-      if ($q['reward_rep_amount'] > 0) {
+    }
+    if ($q['reward_rep_amount'] > 0) {
         echo '<br>' . floor($q['reward_rep_amount'] / 1000) .
             ' reputation with ' . getReputationName($q['reward_rep_id']);
         if ($q['reward_rep_max'] > 0) {
@@ -753,7 +749,7 @@ if ( '0' == $a ) {
           echo '<br><font size="-2">maximum: ' .
               $score_obj['n'] . '</font>';
         }
-      }
+    }
 
       echo '</p>' . "\n";
     }
