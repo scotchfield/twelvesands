@@ -1,0 +1,33 @@
+body {
+  background-color: #000000;
+  background-image: none;
+  margin: 0px;
+}
+
+div.container {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 100%;
+}
+
+div.section_top {
+  background-color: #FFC0C0;
+  border-bottom: 2px solid #C0FFC0;
+}
+
+div.section_middle {
+  background-color: #FFC0C0;
+}
+
+div.section_bottom {
+  background-color: #FFC0C0;
+}
+
+div.section_wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4px;
+  width: 640px;
+}
+

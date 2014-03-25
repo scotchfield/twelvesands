@@ -1,0 +1,455 @@
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 85%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  background-image: url(../images/background128x128.png);
+  background-position: center top;
+  background-repeat:repeat;
+}
+
+body.empty {
+  background-image: url(../images/background128x128light.png);
+}
+
+.invis {
+  display: none;
+}
+
+div.container {
+  background-image: url(../images/background128x128light.png);
+  height: auto !important;
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  width: 736px;
+  text-align: center;
+}
+
+div.container_chat {
+  text-align: left;
+}
+
+div.top_header {
+  margin: auto;
+  width: 640px;
+  height: 40px;
+}
+
+p.info_footer {
+  margin: auto;
+  width: 640px;
+}
+
+p.action_footer {
+  margin: auto;
+  margin-bottom: 8px;
+  width: 640px;
+}
+
+p.tip {
+  background-color: #FFFFA0;
+  border: 3px solid #E5E590;
+  font-weight: bold;
+  padding: 4px;
+}
+
+.no_space {
+  margin: 0;
+  padding: 0;
+}
+
+.no_space_top {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+p.b {
+  font-weight: bold;
+}
+
+div.login_container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  background-color: #D0D0D0;
+}
+
+div.game_title {
+  float: left;
+  text-align: left;
+  width: 50%;
+  height: 50px;
+  font-size: 150%;
+  font-weight: bold;
+  color: #333333;
+}
+
+div.game_info {
+  float: right;
+  text-align: right;
+  height: 50px;
+  width: 50%;
+}
+
+div.top_left {
+  float: left;
+  text-align: left;
+  width: 60%;
+}
+
+div.top_right {
+  float: right;
+  text-align: right;
+  width: 40%;
+  font-weight: bold;
+  color: #333333;
+}
+
+table tr td div.table_stat {
+  text-align: center;
+}
+
+form {
+  margin: 0px;
+}
+
+div.character {
+  text-align: left;
+}
+
+div.character p {
+  margin-top: 0px;
+  margin-bottom: 4px;
+}
+
+div.character ul {
+  margin-left: 0px;
+  padding-left: 0px;
+  display: inline;
+}
+
+div.character ul li {
+  margin-left: 0px;
+  padding-right: 6px;
+  list-style: none;
+}
+
+ul.char_list {
+  padding-left: 0px;
+  list-style: none;
+  display: inline;
+  margin: 0px;
+}
+
+ul.selection_list {
+  display: inline;
+  padding-left: 0px;
+  margin: 0px;
+}
+
+ul.selection_list li {
+  margin: 2px;
+  list-style: none;
+  padding-left: 0px;
+}
+
+.zone_title {
+  font-size: 150%;
+  margin: 0px;
+  font-weight: bold;
+  color: #333333;  
+}
+
+table.stat {
+  border-style: none;
+  border-spacing: 0px;
+}
+
+table.stat td {
+  height: 5px;
+}
+
+table.stat td.good {
+  background-color: green;
+}
+
+table.stat td.bad {
+  background-color: red;
+}
+
+table.stat td.neutral {
+  background-color: blue;
+}
+
+table.stat td.rested {
+  background-color: #ADD8E6;
+}
+
+table.stat td.m_good {
+  background-color: #3366FF;
+}
+
+table.stat td.m_bad {
+  background-color: #990033;
+}
+
+table.stat_header {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 85%;
+}
+
+table.stat_footer {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 85%;
+  margin-top: 16px;
+}
+
+div.reputation {
+  color: blue;
+}
+
+span.mod_highlight {
+  color: blue;
+}
+
+span.hand {
+  cursor: pointer;
+  cursor: hand;
+}
+
+span.alert {
+  color: red;
+}
+
+span.greyed {
+  color: #C0C0C0;
+}
+
+span.light_greyed {
+  color: #E0E0E0;
+}
+
+table.leaderboard tr {
+  text-align: center;
+}
+
+table.leaderboard tr td.l {
+  text-align: left;
+}
+
+table.leaderboard tr td.r {
+  text-align: right;
+}
+
+table.combat_config tr {
+  text-align: center;
+}
+
+#popup {
+  /* Necessary: */
+  position: absolute;
+  display: none;
+  z-index: 10;
+
+  /* Additional styling: */
+  width: 200px;
+  background-color: #EEEEEE;
+  border: 3px solid #D4D4D4;
+  opacity: .85;
+  filter: alpha(opacity=85);
+}
+
+a.item {
+  text-decoration: none;
+  cursor: default;
+  font-weight: bolder;
+}
+
+span.item_t0 {
+  color: #333333;
+}
+
+span.item_t1 {
+  color: #003300;
+}
+
+span.item_t2 {
+  color: #33CC00;
+}
+
+span.item_t3 {
+  color: #3333FF;
+}
+
+span.item_t4 {
+  color: #CC00CC;
+}
+
+table.profession tr {
+  text-align: center;
+}
+
+table.store tr {
+  text-align: center;
+}
+
+table.header_table tr {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+table.header_table tr td.header_left {
+  text-align: left;
+  font-size: 85%;
+}
+
+table.header_table tr td.header_left_fullsize {
+  text-align: left;
+}
+
+table.header_table tr td.header_right {
+  text-align: right;
+  font-weight: bold;
+}
+
+span.nav_type {
+  color: #808080;
+}
+
+table.nav_table tr {
+  text-align: left;
+}
+
+table.nav_table tr td {
+  vertical-align: top;
+}
+
+div.chat_div {
+  font-size: 90%;
+}
+
+span.section_header {
+  font-weight: bold;
+  font-size: 133%;
+}
+
+p.duel_result {
+  background-color: #C0C0C0;
+  font-size: 90%;
+  padding: 6px;
+  width: 75%;
+  border: 1px dotted #808080;
+}
+
+table.plain {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 100%;
+  text-align: center;
+}
+
+.combat_button {
+   font-size: 12px;
+   font-weight: bold;
+   background-color: #CCDDFF;
+   border-style: groove;
+   border-color: #000000;
+}
+
+.rounded {
+  background: #EEEEEE none repeat scroll 0 0;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+table.achievement {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 100%;
+  text-align: center;
+  width: 80%;
+  border: 2px solid #FFD324;
+  margin: 8px;
+  padding: 2px;
+}
+
+input.button_link {
+  border: 0px;
+  background: none;
+  color: #0000FF;
+  text-decoration: underline;
+  width: auto;
+  overflow: visible;
+}
+
+ul.char_nav {  
+  width: 32.2em;
+  list-style: none;  
+  padding: 0;
+  margin: auto;
+  background: #FFF;
+  color: black;
+  font-size: 80%;
+  text-align: center;
+}
+
+ul.char_nav li {
+  width: 7.8em;
+  float: left;
+  margin: 0;
+  position: relative;
+  border: 1px solid #666;
+}
+
+ul.char_nav li a {
+  width: 100%;
+  padding: 10px 0px 10px 0px;  
+  color: black;
+  display: block;  
+  text-decoration: none;  
+  float: left;  
+}  
+
+ul.char_nav li span.subhover {
+  background-position: center bottom bottom; cursor: pointer;
+}
+
+ul.char_nav li ul.char_sub_nav {  
+  list-style: none;  
+  position: absolute;
+  left: 0; top: 35px;  
+  background: #EEE;
+  text-align: left;
+  margin: 0; padding: 0;  
+  display: none;  
+  float: left;  
+  width: 150px;
+  border: 1px solid #111;  
+}  
+
+ul.char_nav li ul.char_sub_nav li{  
+  margin: 0; padding: 0;  
+  clear: both;  
+  width: 150px;
+}  
+
+html ul.char_nav li ul.char_sub_nav li a {  
+  float: left;  
+  width: 129px;
+  padding-left: 20px;
+}
+
+html ul.char_nav li ul.char_sub_nav li a:hover {
+  background: #DDD;
+}
