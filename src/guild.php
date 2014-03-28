@@ -94,7 +94,7 @@ if ( 'c' == $action ) {
                     'a full member though.  Good luck!</p>';
             } else {
                 $output_obj[] = '<p>Are you sure you want to apply to <b>' .
-                    $guild['name'] . '</b>?<br>' .
+                    $guild[ 'name' ] . '</b>?<br>' .
                     '<a href="guild.php?a=ap&i=' . $guild_id . '&y=1">Submit ' .
                     'an application</a></p>';
             }
@@ -213,20 +213,20 @@ if ( 'l' == $action ) {
     $guilds = getGuilds();
     echo '<h2>Guild List:</h2>';
     echo '<p>';
-    foreach ($guilds as $g) {
-        echo '<a href="guild.php?i=' . $g['id'] . '">' . $g['name'] . '</a> ';
-        if ($g['leader_id'] > 0) {
-            echo '(led by <a href="char.php?i=' . $g['leader_id'] . '">' .
-                 $g['leader_name'] . '</a>)';
-            if ($char_obj->c['guild_id'] == 0) {
-              echo ' <font size="-2">(<a href="guild.php?a=ap&i=' . $g['id'] .
+    foreach ( $guilds as $g ) {
+        echo '<a href="guild.php?i=' . $g[ 'id' ] . '">' . $g[ 'name' ] . '</a> ';
+        if ( $g[ 'leader_id' ] > 0 ) {
+            echo '(led by <a href="char.php?i=' . $g[ 'leader_id' ] . '">' .
+                 $g[ 'leader_name' ] . '</a>)';
+            if ( $char_obj->c[ 'guild_id' ] == 0 ) {
+              echo ' <font size="-2">(<a href="guild.php?a=ap&i=' . $g[ 'id' ] .
                    '">apply</a>)</font>';
             }
         } else {
             echo '(no leader!)';
         }
-        if ($g['motto'] != '') {
-            echo '<br><span style="font-size: 75%">' . $g['motto'] . '</span><br>';
+        if ( $g[ 'motto' ] != '' ) {
+            echo '<br><span style="font-size: 75%">' . $g[ 'motto' ] . '</span><br>';
         }
         echo '<br>';
     }
@@ -234,37 +234,37 @@ if ( 'l' == $action ) {
 
     echo '<p><a href="guild.php">Back to Guild Management</a></p>';
 
-} elseif ('c' == $action) {
+} elseif ( 'c' == $action ) {
 
     echo $a_str;
 
     echo '<p><a href="guild.php">Back to Guild Management</a></p>';
 
-} elseif ('v' == $action) {
+} elseif ( 'v' == $action ) {
 
-    $guild_id = getGetInt('i', 0);
-    if ($guild_id < 1) {
+    $guild_id = getGetInt( 'i', 0 );
+    if ( $guild_id < 1 ) {
         echo '<p>That guild doesn\'t exist!</p>';
     } else {
-        $guild = getGuildById($guild_id);
-        if (FALSE == $guild) {
+        $guild = getGuildById( $guild_id );
+        if ( FALSE == $guild ) {
             echo '<p>That guild doesn\'t exist!</p>';
         } else {
-            echo '<h3>Members of ' . $guild['name'] . '</h3>';
+            echo '<h3>Members of ' . $guild[ 'name' ] . '</h3>';
 
-            $guild_members = getGuildMembers($guild_id);
+            $guild_members = getGuildMembers( $guild_id );
             echo '<p>';
-            foreach ($guild_members as $guild_member) {
-                if ($guild_member['rank'] <= 5) {
-                    echo '<a href="char.php?i=' . $guild_member['char_id'] .
-                         '">' . $guild_member['char_name'] . '</a>, ';
-                    switch ($guild_member['rank']) {
-                    case 1: echo $guild['rank_1']; break;
-                    case 2: echo $guild['rank_2']; break;
-                    case 3: echo $guild['rank_3']; break;
-                    case 4: echo $guild['rank_4']; break;
-                    case 5: echo $guild['rank_5']; break;
-                    default: echo $guild['rank_5']; break;
+            foreach ( $guild_members as $guild_member ) {
+                if ( $guild_member[ 'rank' ] <= 5 ) {
+                    echo '<a href="char.php?i=' . $guild_member[ 'char_id' ] .
+                         '">' . $guild_member[ 'char_name' ] . '</a>, ';
+                    switch ( $guild_member[ 'rank' ] ) {
+                    case 1: echo $guild[ 'rank_1' ]; break;
+                    case 2: echo $guild[ 'rank_2' ]; break;
+                    case 3: echo $guild[ 'rank_3' ]; break;
+                    case 4: echo $guild[ 'rank_4' ]; break;
+                    case 5: echo $guild[ 'rank_5' ]; break;
+                    default: echo $guild[ 'rank_5' ]; break;
                     }
                     echo '<br>';
                 }
@@ -275,47 +275,47 @@ if ( 'l' == $action ) {
 
     echo '<p><a href="guild.php">Back to Guild Management</a></p>';
 
-} elseif ('p' == $action) {
+} elseif ( 'p' == $action ) {
 
-    foreach ($output_obj as $output_str) {
+    foreach ( $output_obj as $output_str ) {
         echo $output_str;
     }
 
-    if (FALSE != $guild) {
-        echo '<h3>Promotions and Demotions: ' . $guild['name'] . '</h3>';
+    if ( FALSE != $guild ) {
+        echo '<h3>Promotions and Demotions: ' . $guild[ 'name' ] . '</h3>';
 
-        $guild_members = getGuildMembers($char_obj->c['guild_id']);
+        $guild_members = getGuildMembers( $char_obj->c[ 'guild_id' ] );
         $applicant_seen = FALSE;
         echo '<p><b>Full members:</b></p><p>';
-        foreach ($guild_members as $guild_member) {
-            if ((FALSE == $applicant_seen) && (6 == $guild_member['rank'])) {
+        foreach ( $guild_members as $guild_member ) {
+            if ( ( FALSE == $applicant_seen ) && ( 6 == $guild_member[ 'rank' ] ) ) {
                 $applicant_seen = TRUE;
                 echo '</p><hr width="300"><p><b>Applicants:</b></p><p>';
             }
-            echo '<a href="char.php?i=' . $guild_member['char_id'] .
-                 '">' . $guild_member['char_name'] . '</a>, ';
-            switch ($guild_member['rank']) {
-            case 1: echo $guild['rank_1']; break;
-            case 2: echo $guild['rank_2']; break;
-            case 3: echo $guild['rank_3']; break;
-            case 4: echo $guild['rank_4']; break;
-            case 5: echo $guild['rank_5']; break;
+            echo '<a href="char.php?i=' . $guild_member[ 'char_id' ] .
+                 '">' . $guild_member[ 'char_name' ] . '</a>, ';
+            switch ( $guild_member[ 'rank' ] ) {
+            case 1: echo $guild[ 'rank_1' ]; break;
+            case 2: echo $guild[ 'rank_2' ]; break;
+            case 3: echo $guild[ 'rank_3' ]; break;
+            case 4: echo $guild[ 'rank_4' ]; break;
+            case 5: echo $guild[ 'rank_5' ]; break;
             case 6: echo 'Applicant'; break;
             default: echo 'Applicant'; break;
             }
-            if ($guild_member['rank'] > 2) {
+            if ( $guild_member[ 'rank' ] > 2 ) {
                 echo ' <font size="-2">(<a href="guild.php?a=p&i=' .
-                     $guild_member['char_id'] . '&r=' .
-                     ($guild_member['rank']-1) . '">promote</a>)</font>';
+                     $guild_member[ 'char_id' ] . '&r=' .
+                     ( $guild_member[ 'rank' ] - 1 ) . '">promote</a>)</font>';
             }
-            if (($guild_member['rank'] > 1) && ($guild_member['rank'] < 5)) {
+            if ( ( $guild_member[ 'rank' ] > 1 ) && ( $guild_member[ 'rank' ] < 5 ) ) {
                 echo ' <font size="-2">(<a href="guild.php?a=p&i=' .
-                     $guild_member['char_id'] . '&r=' .
-                     ($guild_member['rank']+1) . '">demote</a>)</font>';
+                     $guild_member[ 'char_id' ] . '&r=' .
+                     ( $guild_member[ 'rank' ] + 1 ) . '">demote</a>)</font>';
             }
-            if ($guild_member['rank'] > 1) {
+            if ( $guild_member[ 'rank' ] > 1 ) {
                 echo ' <font size="-2">(<a href="guild.php?a=p&r=0&i=' .
-                       $guild_member['char_id'] . '">remove</a>)</font>';
+                       $guild_member[ 'char_id' ] . '">remove</a>)</font>';
             }
             echo '<br>';
         }
@@ -327,16 +327,16 @@ if ( 'l' == $action ) {
 
     echo '<p><a href="guild.php">Back to Guild Management</a></p>';
 
-} elseif ('r' == $action) {
+} elseif ( 'r' == $action ) {
 
     $guild = FALSE;
-    if ($char_obj->c['guild_id'] > 0) {
-        if ($char_obj->c['guild_rank'] == 1) {
-            $guild = getGuildById($char_obj->c['guild_id']);
+    if ( $char_obj->c[ 'guild_id' ] > 0 ) {
+        if ( $char_obj->c[ 'guild_rank' ] == 1 ) {
+            $guild = getGuildById( $char_obj->c[ 'guild_id' ] );
         }
     }
 
-    if (FALSE != $guild) {
+    if ( FALSE != $guild ) {
         echo '<p class="tip">Guild titles must be between 3 and 32 characters ' .
              'long.</p>';
 
@@ -345,15 +345,15 @@ if ( 'l' == $action ) {
         echo '<tr><th width="50">Rank</th><th>Title</th></tr>';
 
         echo '<tr><td>1</td><td><input type="text" size="32" name="r1" value="' .
-             $guild['rank_1'] . '"></td></tr>';
+             $guild[ 'rank_1' ] . '"></td></tr>';
         echo '<tr><td>2</td><td><input type="text" size="32" name="r2" value="' .
-             $guild['rank_2'] . '"></td></tr>';
+             $guild[ 'rank_2' ] . '"></td></tr>';
         echo '<tr><td>3</td><td><input type="text" size="32" name="r3" value="' .
-             $guild['rank_3'] . '"></td></tr>';
+             $guild[ 'rank_3' ] . '"></td></tr>';
         echo '<tr><td>4</td><td><input type="text" size="32" name="r4" value="' .
-             $guild['rank_4'] . '"></td></tr>';
+             $guild[ 'rank_4' ] . '"></td></tr>';
         echo '<tr><td>5</td><td><input type="text" size="32" name="r5" value="' .
-             $guild['rank_5'] . '"></td></tr>';
+             $guild[ 'rank_5' ] . '"></td></tr>';
 
         echo '</table></center>';
         echo '<input type="submit" value="Submit Changes" />';
@@ -365,13 +365,13 @@ if ( 'l' == $action ) {
 
     echo '<p><a href="guild.php">Back to Guild Management</a></p>';
 
-} elseif ('cg' == $action) {
+} elseif ( 'cg' == $action ) {
 
-    if (($char_obj->c['guild_id'] > 0) && ($char_obj->c['guild_rank'] == 6)) {
-        removeGuildMember($char_obj, $char_obj->c['guild_id']);
-        $char_obj->setGuildId(0);
-        $char_obj->setGuildName('');
-        $char_obj->setGuildRank(0);
+    if ( ( $char_obj->c[ 'guild_id' ] > 0 ) && ( $char_obj->c[ 'guild_rank' ] == 6 ) ) {
+        removeGuildMember( $char_obj, $char_obj->c[ 'guild_id' ] );
+        $char_obj->setGuildId( 0 );
+        $char_obj->setGuildName( '' );
+        $char_obj->setGuildRank( 0 );
         echo '<p>Application cancelled!</p>';
     } else {
         echo '<p>You don\'t have any applications at the moment.</p>';
@@ -379,34 +379,34 @@ if ( 'l' == $action ) {
 
     echo '<p><a href="guild.php">Back to Guild Management</a></p>';
 
-} elseif (('ap' == $action) || ('lg' == $action)) {
+} elseif ( ( 'ap' == $action ) || ( 'lg' == $action ) ) {
 
-    foreach ($output_obj as $output_str) {
+    foreach ( $output_obj as $output_str ) {
         echo $output_str;
     }
 
     echo '<p><a href="guild.php">Back to Guild Management</a></p>';
 
-} elseif ('u' == $action) {
+} elseif ( 'u' == $action ) {
 
     $guild = FALSE;
-    if ($char_obj->c['guild_id'] > 0) {
-        if ($char_obj->c['guild_rank'] == 1) {
-            $guild = getGuildById($char_obj->c['guild_id']);
+    if ( $char_obj->c[ 'guild_id' ] > 0 ) {
+        if ( $char_obj->c[ 'guild_rank' ] == 1 ) {
+            $guild = getGuildById( $char_obj->c[ 'guild_id' ] );
         }
     }
 
-    if (FALSE != $guild) {
+    if ( FALSE != $guild ) {
         echo '<p class="tip">You can leave a message for your guildmates and ' .
              'visitors here.</p>';
 
         echo '<form action="action.php?a=gm" method="post">' .
              '<p><b>Motto:</b><br><input type="text" size="50" ' .
-             'name="motto" value="' . $guild['motto'] . '"></p>' .
+             'name="motto" value="' . $guild[ 'motto' ] . '"></p>' .
              '<p><b>Website:</b><br><input type="text" size="50" ' .
-             'name="url" value="' . $guild['url'] . '"></p>' .
+             'name="url" value="' . $guild[ 'url' ] . '"></p>' .
              '<p><b>Message:</b><br><textarea name="message" cols="50">' .
-             $guild['message'] . '</textarea></p>' .
+             $guild[ 'message' ] . '</textarea></p>' .
              '<p><input type="submit" value="Submit Changes"></p>' .
              '</form>';
     } else {
@@ -417,10 +417,10 @@ if ( 'l' == $action ) {
 
 } else {
 
-    $guild_id = getGetInt('i', $char_obj->c['guild_id']);
-    $guild = getGuildById($guild_id);
+    $guild_id = getGetInt( 'i', $char_obj->c[ 'guild_id' ] );
+    $guild = getGuildById( $guild_id );
 
-    if (FALSE != $guild) {
+    if ( FALSE != $guild ) {
 
         echo '<table border="0" cellpadding="0" class="plain"><tr>';
 
@@ -430,21 +430,21 @@ if ( 'l' == $action ) {
 
         echo '<td width="400" align="center">' .
              '<p><span style="font-size: 150%">' .
-             $guild['name'] . '</span><br>' .
-             '<b>Leader:</b> <a href="char.php?i=' . $guild['leader_id'] .
-             '">' . $guild['leader_name'] . '</a>';
-        if ($guild['motto'] != '') {
-            echo '<br><b>Motto:</b> ' . $guild['motto'];
+             $guild[ 'name' ] . '</span><br>' .
+             '<b>Leader:</b> <a href="char.php?i=' . $guild[ 'leader_id' ] .
+             '">' . $guild[ 'leader_name' ] . '</a>';
+        if ( $guild[ 'motto' ] != '' ) {
+            echo '<br><b>Motto:</b> ' . $guild[ 'motto' ];
         }
-        if ($guild['url'] != '') {
-            echo '<br><b>Website:</b> <a href="' . $guild['url'] . '">' .
-                 $guild['url'] . '</a>';
+        if ( $guild[ 'url' ] != '' ) {
+            echo '<br><b>Website:</b> <a href="' . $guild[ 'url' ] . '">' .
+                 $guild[ 'url' ] . '</a>';
         }
-        if ($guild['id'] == $char_obj->c['guild_id']) {
+        if ( $guild[ 'id' ] == $char_obj->c[ 'guild_id' ] ) {
             echo '</p><p><i>';
-            if ($char_obj->c['guild_rank'] == 1) {
+            if ( $char_obj->c[ 'guild_rank' ] == 1 ) {
                 echo 'You are the leader of this guild.';
-            } elseif ($char_obj->c['guild_rank'] == 6) {
+            } elseif ( $char_obj->c[ 'guild_rank' ] == 6 ) {
                 echo 'You have applied to this guild.<br>' .
                      '<a href="guild.php?a=cg">Cancel guild application</a>';
             } else {
@@ -462,24 +462,24 @@ if ( 'l' == $action ) {
 
         echo '</tr></table>';
 
-        if ($guild['message'] != '') {
-            echo '<p><b>Guild Message:</b> ' . $guild['message'] . '</p>';
+        if ( $guild[ 'message' ] != '' ) {
+            echo '<p><b>Guild Message:</b> ' . $guild[ 'message' ] . '</p>';
         }
 
         echo '<p style="font-size: 133%"><b>Member List:</b></p>';
         $last_rank = 0;
-        $guild_members = getGuildMembers($guild_id);
-        foreach ($guild_members as $m) {
-            if ($m['rank'] <= 5) {
-                if ($m['rank'] != $last_rank) {
-                    echo '<p><b>' . $guild['rank_' . $m['rank']] . '</b><br>';
-                    $last_rank = $m['rank'];
+        $guild_members = getGuildMembers( $guild_id );
+        foreach ( $guild_members as $m ) {
+            if ( $m[ 'rank' ] <= 5 ) {
+                if ( $m[ 'rank' ] != $last_rank ) {
+                    echo '<p><b>' . $guild[ 'rank_' . $m[ 'rank' ] ] . '</b><br>';
+                    $last_rank = $m[ 'rank' ];
                 }
-                echo '<a href="char.php?i=' . $m['char_id'] . '">' . $m['char_name'] .
-                     '</a>, Level ' . $m['level'];
-                if ($m['d_id'] > 0) {
+                echo '<a href="char.php?i=' . $m[ 'char_id' ] . '">' . $m[ 'char_name' ] .
+                     '</a>, Level ' . $m[ 'level' ];
+                if ( $m[ 'd_id' ] > 0 ) {
                     echo ' (Dungeon Run: ';
-                    switch ($m['d_id']) {
+                    switch ( $m[ 'd_id' ] ) {
                         case 1: echo '&Aacute;lmok Crypts Stables'; break;
                     }
                     echo ')';
